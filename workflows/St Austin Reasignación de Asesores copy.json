@@ -1,0 +1,4199 @@
+{
+  "name": "St Austin Reasignación de Asesores copy",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Cliente",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -208
+      ],
+      "id": "5ad575e9-7c21-4f16-b91e-dbcb0081bda5",
+      "name": "Supabase Get lista de todos los usuarios",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ca8b2232-2b6c-45d3-9c5d-faf721519f4e",
+              "leftValue": "={{ $json.correoAsesor }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -208
+      ],
+      "id": "d89feab9-de26-4a57-8833-6cfcfaa22fdd",
+      "name": "If correoAsesor tiene un valor asignado"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "carlosrios.inmobiliaria@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7b371ac4-05be-4abe-972f-77cb6db84f28"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2e1e3ef3-6fa8-4715-b249-b7f9008e9c3c",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "lluvia.gonzalezrealestate@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "723fe32c-a0ee-4125-8fd3-964acf8bdfa6",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "tuhogarqro2022@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "43d66661-657a-44c8-8270-34a30452f86e",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "alejandrabarillas2602@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e0785c87-14d0-4690-bb1c-bd1c2ae19142",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "jhonaizt@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ae59829c-110c-46da-9833-6b5a19ca9941",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "teorafamarin@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f0173baa-f0c8-4da9-830d-34d366cce5f3",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "alexgarciablanco@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cf674399-1056-443e-b97f-355ce225cf2b",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "perezramabraham79@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "36f155e0-f48d-416c-a43f-599c35c3ea52",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "izta132100@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        960,
+        -496
+      ],
+      "id": "705092f9-daf6-4c6f-a7a0-d06857d22c54",
+      "name": "Switch Descubrir la hoja del asesor correspondiente"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c7c28e44-129c-44ce-b23e-1d26c3af5f04",
+              "leftValue": "={{ $json.asesorRespondio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -304
+      ],
+      "id": "f7b99b3a-7aff-4ebf-b14d-624961649b48",
+      "name": "If asesorRespondio es falso"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA",
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 367937493,
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit#gid=367937493"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -1168
+      ],
+      "id": "71c6fa30-b8c5-4b50-be58-ba1b922d4386",
+      "name": "Google Sheets Get hoja del Asesor 1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c",
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit#gid=1394933495"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -944
+      ],
+      "id": "6f5e7541-dd22-456e-9c45-b988a266631f",
+      "name": "Google Sheets Get hoja del Asesor 2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY",
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit#gid=1189384852"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -720
+      ],
+      "id": "c8206cba-9aff-49f5-adfe-2a0c12a8ce79",
+      "name": "Google Sheets Get hoja del Asesor 3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ",
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 595919043,
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit#gid=595919043"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -496
+      ],
+      "id": "5687e0f1-d0bd-4fab-a6b6-3593f96a8e2c",
+      "name": "Google Sheets Get hoja del Asesor 4",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0",
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1368881999,
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit#gid=1368881999"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -288
+      ],
+      "id": "4b13726a-5b1f-4b7c-b7aa-9924dddb49ad",
+      "name": "Google Sheets Get hoja del Asesor 5",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "553206a0-cc07-4c92-b108-fc33b7f3f289",
+              "name": "idCliente",
+              "value": "={{ $('Supabase Get lista de todos los usuarios').item.json.idCliente }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3632,
+        -400
+      ],
+      "id": "a5ea6622-f12b-4c3d-a801-7bb606c91ec6",
+      "name": "Set id del cliente para mandarlo al subflujo"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rrWJUVBmy07hhMit",
+          "mode": "list",
+          "cachedResultName": "St Austin — St Austin Asignar Asesor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3840,
+        -400
+      ],
+      "id": "5fd1c3f9-357d-4789-8c0b-7359142c961d",
+      "name": "Execute Workflow Asignar asesor"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd483203-721f-495a-ae66-07493b894b7d",
+              "leftValue": "={{ $json['¿Contactado?'] }}",
+              "rightValue": "No",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1648,
+        -368
+      ],
+      "id": "249fdd91-462c-47f3-a01a-e705a5c8b757",
+      "name": "If Asesor ya contactó al usuario"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Obtiene el string ISO 8601 de la fecha de asignación desde el input del nodo\n// Asegúrate que el nodo anterior (Supabase Get) sí esté pasando esta columna.\nconst fechaStrISO = $('Supabase Get lista de todos los usuarios').item.json.fechaAsignacionAsesor;\nlet vencida = false;\nlet asignDate = null;\n\nif (fechaStrISO) {\n  try {\n    // new Date() parsea strings ISO 8601 de forma nativa y confiable\n    asignDate = new Date(fechaStrISO);\n  } catch (e) {\n    console.error(\"Error parsing ISO date string:\", fechaStrISO, e);\n    asignDate = null; // Falló el parseo\n  }\n}\n\n// Validar si la fecha es válida (no null y no \"Invalid Date\")\nif (asignDate && !isNaN(asignDate.getTime())) {\n  // La lógica de comparación funciona igual (compara timestamps UTC)\n  // Se calcula el timestamp de hace 1 hora en UTC\n  const oneHourInMilliseconds = 1 * 60 * 59 * 1000;\n  const twoHoursAgo = Date.now() - oneHourInMilliseconds; // UTC timestamp 1h ago\n\n  // Compara si la fecha de asignación es anterior a \"hace 2 horas\"\n  vencida = asignDate.getTime() < twoHoursAgo; // Comparación UTC correcta\n} else if (fechaStrISO) {\n  // Si había fechaStr pero no se pudo parsear o crear, loguear\n  console.log(\"Fecha de asignación inválida o no parseable:\", fechaStrISO);\n  // Decide si 'vencida' debe ser true/false por defecto en este caso. False es más seguro.\n  vencida = false;\n} else {\n  // No había fecha de asignación\n  console.log(\"No se encontró fecha de asignación para verificar vencimiento.\");\n  vencida = false; // O el valor que consideres apropiado\n}\n\n// devuelve solo { vencida }\nreturn {\n  json: { vencida }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        -256
+      ],
+      "id": "411803be-3fa4-46fc-af71-7cc7c410ff28",
+      "name": "Code Descubrir si el tiempo del asesor expiró"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "asesorRespondio",
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        -496
+      ],
+      "id": "4cdddbc9-20b3-4b16-965e-de51737f1fe8",
+      "name": "Supabase Actualizar parámetro asesorRespondio",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA",
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 367937493,
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit#gid=367937493"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "  ",
+            "¿Contactado?": "REASIGNADO",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -1168
+      ],
+      "id": "21877232-05aa-4205-8e28-ad264586a146",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY",
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "  ",
+            "¿Contactado?": "REASIGNADO",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -720
+      ],
+      "id": "377a9f36-d6f9-45ad-9817-e076e8d2939e",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ",
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 595919043,
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit#gid=595919043"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": " ",
+            "¿Contactado?": "REASIGNADO",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -496
+      ],
+      "id": "7f6daf43-bc4d-4a11-82f5-bdb84594f558",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0",
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1368881999,
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit#gid=1368881999"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "¿Contactado?": "REASIGNADO",
+            "Número de teléfono": "  ",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -288
+      ],
+      "id": "104ce792-1d3b-4850-8200-dacef799680f",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM",
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1093270560,
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit#gid=1093270560"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "¿Contactado?": "REASIGNADO",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Número de teléfono": "  ",
+            "Correo electrónico": "  ",
+            "Profesión": " "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -64
+      ],
+      "id": "eab4f3d1-2606-4a42-a33b-cd109603cec8",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g",
+          "mode": "list",
+          "cachedResultName": "Alex Garcia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 988140628,
+          "mode": "list",
+          "cachedResultName": "Alex García",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit#gid=988140628"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "¿Contactado?": "REASIGNADO",
+            "Número de teléfono": "  ",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": " "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        160
+      ],
+      "id": "236e425e-f7bd-4517-ab5b-6b45a8186155",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 9",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        400
+      ],
+      "id": "685f7ab3-51c6-419f-818f-4d5b3baeed1f",
+      "name": "No Operation, do nothing 2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2432,
+        384
+      ],
+      "id": "184ef697-b4e9-4d3d-9462-1c97a6645178",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "1"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -1168
+      ],
+      "id": "a93fa58e-39d5-49e8-9429-d9ee2eebd996",
+      "name": "Supabase Get asesor 1",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "1"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -1168
+      ],
+      "id": "e7e1f63c-060b-440b-8223-29a67d619ce2",
+      "name": "Supabase Actualizar métricas negativas del asesor 1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "2"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -944
+      ],
+      "id": "479b2209-6da6-481b-bcee-afc9be8071e3",
+      "name": "Supabase Get asesor 2",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "2"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -944
+      ],
+      "id": "e796c88f-69b1-4617-b6eb-f019fdb26b4d",
+      "name": "Supabase Actualizar métricas negativas del asesor 2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "4"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -496
+      ],
+      "id": "ae32e5ce-f3bf-4860-b965-807270572481",
+      "name": "Supabase Get asesor 4",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "4"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -496
+      ],
+      "id": "8b465a79-42af-4036-93eb-f53d9591ccf5",
+      "name": "Supabase Actualizar métricas negativas del asesor 4",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "3"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -720
+      ],
+      "id": "629a806f-04d0-478c-83af-d65185804786",
+      "name": "Supabase Get asesor 3",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "3"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -720
+      ],
+      "id": "6fcba3a6-0ea6-4c11-982f-2b80097a5425",
+      "name": "Supabase Actualizar métricas negativas del asesor 3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "5"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -288
+      ],
+      "id": "9dc164ab-36bf-4e45-910c-d6b036c8bddd",
+      "name": "Supabase Get asesor 5",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "5"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -288
+      ],
+      "id": "325eaf96-112b-4d89-ae5b-1ea0d7663536",
+      "name": "Supabase Actualizar métricas negativas del asesor 5",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "6"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        -64
+      ],
+      "id": "1ad28830-c5f9-436f-838b-6232f2758426",
+      "name": "Supabase Get asesor 6",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "6"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        -64
+      ],
+      "id": "c26844c7-e4e2-4de0-a163-c95e022ad73c",
+      "name": "Supabase Actualizar métricas negativas del asesor 6",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "extractDate",
+        "date": "={{ new Date() }}",
+        "part": "hour",
+        "outputFieldName": "hora",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        -96
+      ],
+      "id": "b9e1e03e-89b2-45b4-b797-125e0374f356",
+      "name": "Obtener hora del dia"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 */2 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -448,
+        -96
+      ],
+      "id": "e8263d1c-0c56-4bd6-91ff-1af2d749bf6a",
+      "name": "Schedule Trigger 2 horas"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cad6de84-89eb-41ac-b9a1-bf8c5de13e7f",
+              "leftValue": "={{ $json.hora }}",
+              "rightValue": 11,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "18f0f290-567e-4656-b316-9459ff67de6a",
+              "leftValue": "={{ $json.hora }}",
+              "rightValue": 17,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        -96
+      ],
+      "id": "4c945b5c-e95f-4912-8749-c17209eaeb30",
+      "name": "If estamos entre 11am y 5pm"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c81c6b69-2c16-4458-9d36-5af2d927fa27",
+              "leftValue": "={{ $json.vencida }}",
+              "rightValue": "={{$moment().subtract(2, \"days\").toISOString()}}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2080,
+        -256
+      ],
+      "id": "99588f05-e56a-450c-9698-f8c9057abb4b",
+      "name": "If El asesor fue asignado hace más de 2 horas"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "carlosrios.inmobiliaria@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7b371ac4-05be-4abe-972f-77cb6db84f28"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2e1e3ef3-6fa8-4715-b249-b7f9008e9c3c",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "lluvia.gonzalezrealestate@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "723fe32c-a0ee-4125-8fd3-964acf8bdfa6",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "tuhogarqro2022@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "43d66661-657a-44c8-8270-34a30452f86e",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "alejandrabarillas2602@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e0785c87-14d0-4690-bb1c-bd1c2ae19142",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "jhonaizt@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ae59829c-110c-46da-9833-6b5a19ca9941",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "teorafamarin@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f0173baa-f0c8-4da9-830d-34d366cce5f3",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "alexgarciablanco@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8d15f2ff-331e-4006-9714-1d71c83ee7c3",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "perezramabraham79@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cf674399-1056-443e-b97f-355ce225cf2b",
+                    "leftValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.correoAsesor }}",
+                    "rightValue": "izta132100@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2432,
+        -496
+      ],
+      "id": "f4ac1cb7-5311-47b6-ab15-53cc82cb892c",
+      "name": "Switch Descubrir la hoja del asesor correspondiente1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "7"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        160
+      ],
+      "id": "23ad0410-3415-4f23-bab0-2277e0d0b800",
+      "name": "Supabase Get asesor 7",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "7"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        160
+      ],
+      "id": "36f9a96b-40a2-4801-987f-d5368cea77b0",
+      "name": "Supabase Actualizar métricas negativas del asesor 7",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c",
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit#gid=1394933495"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "¿Contactado?": "REASIGNADO",
+            "Profesión": "   ",
+            "Correo electrónico": " ",
+            "Número de teléfono": " "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        -944
+      ],
+      "id": "41f55f97-c34c-4ca7-a460-c91dfe05d532",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM",
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1093270560,
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit#gid=1093270560"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        -64
+      ],
+      "id": "7ee8bda0-1414-438a-80ff-9058eb784466",
+      "name": "Google Sheets Get hoja del Asesor 6",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g",
+          "mode": "list",
+          "cachedResultName": "Alex Garcia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 988140628,
+          "mode": "list",
+          "cachedResultName": "Alex García",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit#gid=988140628"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        160
+      ],
+      "id": "0a105e6b-cbbd-4948-90dd-eab0259a1ca8",
+      "name": "Google Sheets Get hoja del Asesor 7",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc",
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1489588635,
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit#gid=1489588635"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        592
+      ],
+      "id": "f379a80c-bd69-44f8-b650-b1c11153ebd3",
+      "name": "Google Sheets Get hoja del Asesor 9",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY",
+          "mode": "list",
+          "cachedResultName": "Abraham Perez",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Abraham",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit#gid=1394933495"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Número de teléfono",
+              "lookupValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1328,
+        384
+      ],
+      "id": "22883ab7-7ad9-4cd4-ac0e-fe15b9b3acf3",
+      "name": "Google Sheets Get hoja del Asesor 8",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc",
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1489588635,
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit#gid=1489588635"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "¿Contactado?": "REASIGNADO",
+            "Número de teléfono": "  ",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        576
+      ],
+      "id": "e1a55a05-87ee-4c45-a2d3-187df1ba8e98",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor ",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "9"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        576
+      ],
+      "id": "5bf43a18-4b9b-41e4-9898-d78fb74f6068",
+      "name": "Supabase Get asesor 9",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "9"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        576
+      ],
+      "id": "1b5a699c-eea3-42a3-9bd6-1e33196f40aa",
+      "name": "Supabase Actualizar métricas negativas del asesor 9",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY",
+          "mode": "list",
+          "cachedResultName": "Abraham Perez",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Abraham",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit#gid=1394933495"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "¿Contactado?": "REASIGNADO",
+            "Número de teléfono": "  ",
+            "Nombre": "={{ $('Supabase Get lista de todos los usuarios').item.json.nombre }} {{ $('Supabase Get lista de todos los usuarios').item.json.apellido }}",
+            "Correo electrónico": "  ",
+            "Profesión": "  "
+          },
+          "matchingColumns": [
+            "Nombre"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        368
+      ],
+      "id": "3ac34f27-561e-4436-b8a2-ef2b4076151a",
+      "name": "Google Sheets Marcar REASIGNADO en hoja del asesor 8",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "8"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3024,
+        368
+      ],
+      "id": "1a23e319-1a54-4752-982e-296e5550d416",
+      "name": "Supabase Get asesor 8",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "8"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuariosNoContactados",
+              "fieldValue": "={{ $json.usuariosNoContactados + 1}}"
+            },
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $json.puntaje + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        368
+      ],
+      "id": "5ed5b4ed-9fce-471a-a85b-04d673ff9362",
+      "name": "Supabase Actualizar métricas negativas del asesor 8",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger 2 horas": [
+      {
+        "json": {
+          "timestamp": "2025-08-11T17:00:00.013-05:00",
+          "Readable date": "August 11th 2025, 5:00:00 pm",
+          "Readable time": "5:00:00 pm",
+          "Day of week": "Monday",
+          "Year": "2025",
+          "Month": "August",
+          "Day of month": "11",
+          "Hour": "17",
+          "Minute": "00",
+          "Second": "00",
+          "Timezone": "America/Mexico_City (UTC-05:00)"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Supabase Get lista de todos los usuarios": {
+      "main": [
+        [
+          {
+            "node": "If correoAsesor tiene un valor asignado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If correoAsesor tiene un valor asignado": {
+      "main": [
+        [
+          {
+            "node": "If asesorRespondio es falso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If asesorRespondio es falso": {
+      "main": [
+        [
+          {
+            "node": "Switch Descubrir la hoja del asesor correspondiente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Descubrir la hoja del asesor correspondiente": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Get hoja del Asesor 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 1": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 3": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set id del cliente para mandarlo al subflujo": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Asignar asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Asesor ya contactó al usuario": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar parámetro asesorRespondio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code Descubrir si el tiempo del asesor expiró",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Descubrir si el tiempo del asesor expiró": {
+      "main": [
+        [
+          {
+            "node": "If El asesor fue asignado hace más de 2 horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 2": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 4": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 5": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 3": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 4": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 5": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 6": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 9": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 1": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 2": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 2": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 4": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 4": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 3": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 3": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 5": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 5": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 6": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 6": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener hora del dia": {
+      "main": [
+        [
+          {
+            "node": "If estamos entre 11am y 5pm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger 2 horas": {
+      "main": [
+        [
+          {
+            "node": "Obtener hora del dia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If estamos entre 11am y 5pm": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get lista de todos los usuarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If El asesor fue asignado hace más de 2 horas": {
+      "main": [
+        [
+          {
+            "node": "Switch Descubrir la hoja del asesor correspondiente1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Descubrir la hoja del asesor correspondiente1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor 8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Marcar REASIGNADO en hoja del asesor ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 7": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 7": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 2": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 6": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 7": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 9": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get hoja del Asesor 8": {
+      "main": [
+        [
+          {
+            "node": "If Asesor ya contactó al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor ": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 9": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 9": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Marcar REASIGNADO en hoja del asesor 8": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get asesor 8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get asesor 8": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar métricas negativas del asesor 8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar métricas negativas del asesor 8": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5d805269-1af8-47da-b5c0-2f6a0fe4609b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "f2aPLY0sFHoYMsKb",
+  "tags": []
+}

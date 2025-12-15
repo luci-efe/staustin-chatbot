@@ -1,0 +1,1253 @@
+{
+  "name": "St Austin Mensajes de Seguimiento",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Cliente",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        48,
+        160
+      ],
+      "id": "4bc5bf97-e502-4b79-9ff3-995381bb2584",
+      "name": "Supabase Get lista de todos los usuarios",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "esperandoRespuesta",
+              "fieldValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.esperandoRespuesta - 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3632,
+        320
+      ],
+      "id": "fc23caa5-d5df-4623-bf66-f58c2ad1296e",
+      "name": "Supabase Restar parámetro de espera de respuesta",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $json.esperandoRespuestaInd }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "3bcd864f-8307-4e5a-8bf7-64e51df8ca2e",
+              "leftValue": "={{ $json.resultTimeCheck }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        160
+      ],
+      "id": "2e46ac8d-c3ca-45c2-9494-f9c604e211ea",
+      "name": "If El cliente aun tiene mensajes de seguimiento"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 8,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        64
+      ],
+      "id": "c39c0570-9d38-4737-a082-2dfab141747f",
+      "name": "If quedan 8 puntos restantes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        208
+      ],
+      "id": "1c6eddbe-8cdd-4dd8-a822-bbed043be9ac",
+      "name": "If quedan 7 puntos restantes"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        3168,
+        -80
+      ],
+      "id": "fad9af50-5eea-46af-bc2c-ee1d1f1b5909",
+      "name": "WhatsApp Mensaje de seguimiento #1",
+      "webhookId": "1ff33821-6ca9-42fd-a9f8-5ac7ce3d8d30",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "HistorialConversacion",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idCliente",
+              "fieldValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.idCliente }}"
+            },
+            {
+              "fieldId": "mensaje",
+              "fieldValue": "={{ $('AI Agent Respuesta para el Usuario').item.json.output }}"
+            },
+            {
+              "fieldId": "remitente",
+              "fieldValue": "ia"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3392,
+        -80
+      ],
+      "id": "70914f7e-4703-47e3-9e20-45ba188569ba",
+      "name": "Supabase Almacenar mensaje de seguimiento #1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 6,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1168,
+        352
+      ],
+      "id": "c8179cc3-2360-4558-98b6-4d17b0622baf",
+      "name": "If quedan 6 puntos restantes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        480
+      ],
+      "id": "c2c19211-9418-40e6-8879-9d05976b2a19",
+      "name": "If quedan 5 puntos restantes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 4,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        624
+      ],
+      "id": "1b3d346c-38e2-475b-b235-97d43b0260d1",
+      "name": "If quedan 4 puntos restantes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 3,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        768
+      ],
+      "id": "f58ac2f6-08d1-47ee-b923-a37592dc0a9d",
+      "name": "If quedan 3 puntos restantes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfd8432d-fffb-4917-bf33-c4e3a17ca710",
+              "leftValue": "={{ $('Code Definir si pasó más de una hora').item.json.esperandoRespuestaInd }}",
+              "rightValue": 2,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        912
+      ],
+      "id": "b00974ac-bf3f-4d8c-801f-2848fd37fb5e",
+      "name": "If quedan 2 puntos restantes"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        1040
+      ],
+      "id": "f72ea9df-19d5-4081-8b47-62177b6e7151",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -688,
+        352
+      ],
+      "id": "30e796ed-93a3-4db0-9736-511de95490ce",
+      "name": "Schedule Trigger Horario"
+    },
+    {
+      "parameters": {
+        "operation": "extractDate",
+        "date": "={{ new Date() }}",
+        "part": "hour",
+        "outputFieldName": "hora",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        352
+      ],
+      "id": "caac5d12-f2a6-4e9e-ba60-3bae5f6cb0b8",
+      "name": "Obtener hora del dia"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        720,
+        480
+      ],
+      "id": "3aa7dd80-54a4-4d47-9d62-0a400fa00877",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2736,
+        160
+      ],
+      "id": "df6b0dad-53f5-438c-894a-44c3bc545fd8",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Obtener los datos del item actual\nconst itemData = $input.item.json;\nconst lastMessageTimestamp = itemData.fechaUltimoMensaje; // Ej: \"2025-04-29T01:57:40.477912+00:00\" o \"27/04/2025 02:02:48\"\nconst esperandoRespuesta = itemData.esperandoRespuesta;\nconst phoneNumber = itemData.numeroTelefono; // Asegúrate que este sea el nombre correcto del campo\nconst idCliente = itemData.idCliente; // Extraer el idCliente\nlet hasBeenMoreThanOneHour = false;\nlet lastMessageDate;\n\n// --- IMPORTANTE: Ajusta esta parte según el formato REAL de tu fecha ---\n// Intenta parsear directamente si es formato ISO 8601 (como el de fechaOsCreacion en tu imagen)\ntry {\n  if (lastMessageTimestamp) {\n     lastMessageDate = new Date(lastMessageTimestamp);\n     // Verifica si la fecha es válida después de intentar parsearla\n     if (isNaN(lastMessageDate.getTime())) {\n         // Si falla el parseo directo, intenta con el formato \"DD/MM/YYYY HH:mm:ss\" si es ese el caso\n         const parts = lastMessageTimestamp.match(/(\\d{2})\\/(\\d{2})\\/(\\d{4})\\s(\\d{2}):(\\d{2}):(\\d{2})/);\n         if (parts) {\n           // Formato DD/MM/YYYY HH:mm:ss -> Reordenar a YYYY-MM-DDTHH:mm:ss para el constructor Date\n           lastMessageDate = new Date(`${parts[3]}-${parts[2]}-${parts[1]}T${parts[4]}:${parts[5]}:${parts[6]}`);\n         } else {\n           // Si tampoco es este formato, podrías intentar otros o marcar como inválido\n            console.error(\"Formato de fecha no reconocido:\", lastMessageTimestamp);\n            lastMessageDate = null; // Marcar como inválido\n         }\n     }\n  } else {\n    lastMessageDate = null; // No hay fecha\n  }\n} catch (error) {\n   console.error(\"Error parseando la fecha:\", lastMessageTimestamp, error);\n   lastMessageDate = null; // Error al parsear\n}\n\n// Procede solo si tenemos una fecha válida\nif (lastMessageDate && !isNaN(lastMessageDate.getTime())) {\n  // Obtener la fecha y hora actual\n  const currentDate = new Date();\n  // Calcular la diferencia en milisegundos\n  const diffMilliseconds = currentDate.getTime() - lastMessageDate.getTime();\n  // Calcular la diferencia en horas\n  const diffHours = diffMilliseconds / (1000 * 60 * 60);\n  // Verificar si ha pasado más de una hora\n  if (diffHours > 1) {\n    hasBeenMoreThanOneHour = true;\n  }\n} else {\n    // Si no hay fecha válida, consideramos que no ha pasado más de una hora para evitar envíos erróneos\n    hasBeenMoreThanOneHour = false;\n    console.log(\"No se pudo procesar la fecha para el usuario con teléfono:\", phoneNumber, \"y idCliente:\", idCliente);\n}\n\n// Devolver el resultado junto con los datos necesarios para el siguiente nodo\nreturn {\n  json: {\n    idCliente: idCliente, // Incluir el idCliente en el resultado\n    resultTimeCheck: hasBeenMoreThanOneHour, // true si pasó más de 1 hora, false si no o si hubo error/fecha inválida\n    esperandoRespuestaInd: esperandoRespuesta,\n    numberWhatsapp: phoneNumber\n    // Puedes añadir otros campos del usuario si los necesitas después\n    // originalUserData: itemData\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        160
+      ],
+      "id": "206ebd13-f790-4a58-a6e9-b19d48d45a55",
+      "name": "Code Definir si pasó más de una hora"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5076af-ff42-4421-96e9-69282346f7cc",
+              "name": "Mensaje de seguimiento",
+              "value": 1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        -80
+      ],
+      "id": "b1177e9e-00f2-4c3d-969c-4d95a9b1f15e",
+      "name": "Set Mensaje de seguimiento actual es el 1"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1rts8GaO6XBTxER5nWtd-ByygJnultQgF",
+          "mode": "list",
+          "cachedResultName": "Promoción",
+          "cachedResultUrl": "https://drive.google.com/file/d/1rts8GaO6XBTxER5nWtd-ByygJnultQgF/view?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1168,
+        64
+      ],
+      "id": "c934a1cd-6852-4aca-8b18-c8dc93fe9fdb",
+      "name": "Google Drive descargar imagen de promoción",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "LA8zxVAetiqVuszy",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Supabase Get lista de todos los usuarios').item.json.numeroTelefono }}",
+        "messageType": "image",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        64
+      ],
+      "id": "23fd3885-1ae6-4011-9c91-cf7392801647",
+      "name": "WhatsApp Enviar imagen de promoción",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5076af-ff42-4421-96e9-69282346f7cc",
+              "name": "Mensaje de seguimiento",
+              "value": 2,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1600,
+        64
+      ],
+      "id": "c748399a-5bac-450e-9b2a-5ff0422c54c8",
+      "name": "Set Mensaje de seguimiento actual es el 2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get lista de todos los usuarios').item.json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idEstado",
+              "fieldValue": "3"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        768
+      ],
+      "id": "8110eba3-e15b-4d2b-9668-e6c637e614ae",
+      "name": "Supabase Set estado del cliente como convo abandonada",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5076af-ff42-4421-96e9-69282346f7cc",
+              "name": "Mensaje de seguimiento",
+              "value": 3,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1600,
+        240
+      ],
+      "id": "2af70936-a0b0-4210-aaef-b14e954141c9",
+      "name": "Set Mensaje de seguimiento actual es el 3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5076af-ff42-4421-96e9-69282346f7cc",
+              "name": "Mensaje de seguimiento",
+              "value": 4,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2480,
+        768
+      ],
+      "id": "b9909a1c-5495-44e7-a6b9-805775049a73",
+      "name": "Set Mensaje de seguimiento actual es el 4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cad6de84-89eb-41ac-b9a1-bf8c5de13e7f",
+              "leftValue": "={{ $json.hora }}",
+              "rightValue": 9,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "18f0f290-567e-4656-b316-9459ff67de6a",
+              "leftValue": "={{ $json.hora }}",
+              "rightValue": 19,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        352
+      ],
+      "id": "50f8a148-0718-470b-8073-45c9d986a05b",
+      "name": "If estamos entre 9am y 7pm"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Mensaje de Seguimiento #{{ $json['Mensaje de seguimiento'] }}\nID del Cliente: {{ $('Code Definir si pasó más de una hora').item.json.idCliente }}\n\nINSTRUCCIONES CRÍTICAS:\n- NUNCA inventes información (consultorios vendidos, experiencias de otros inversionistas, disponibilidad, ofertas especiales)\n- Si necesitas datos específicos, usa la Knowledge Base con keywords \"DISTRITO MÉDICO\" o \"BERNARDO QUINTANA\"\n- Basa tu mensaje 100% en la conversación real con el cliente y datos verificados\n- Tu respuesta debe ser ÚNICAMENTE el mensaje de seguimiento limpio, sin explicaciones ni metadatos\n- El mensaje será enviado directamente por WhatsApp al cliente",
+        "options": {
+          "systemMessage": "=# FOLLOW-UP ASSISTANT - ST AUSTIN LEAD RECOVERY SYSTEM\n\n## 🎯 ROLE & MISSION\n\nYou are a professional and empathetic real estate advisor for St. Austin. Your mission is to recover abandoned conversations by showing genuine interest in helping users find the right investment opportunity. You reconnect with warmth, respect, and valuable information—never with pressure or invented urgency.\n\n**1. Distrito Médico** (Fray Junípero Serra, El Marqués, Querétaro)\n- Available: Medical offices (Consultorios), Commercial spaces (Locales), Investment tickets\n- Opening date: September 2027 (DO NOT mention proactively; only if user asks, consult KB)\n- Prices: \n   - Consultorios: $2'000,000 MXN to $3'400,000 MXN.\n   - Locales: $2'300,000 MXN to $11'500,000 MXN.\n   - Tickets: $300,000 MXN.\n\n**2. Bernardo Quintana** (Querétaro)\n- Available: Medical offices (Consultorios), Commercial spaces (Locales)\n- **NO tickets available** at this location\n- For specific details, consult Knowledge Base with \"BERNARDO QUINTANA\" keyword\n- Opening date: August 2028 (DO NOT mention proactively; only if user asks, consult KB)\n- Prices: \n   - Consultorios: $1'600,000 MXN up to $5'000,000 MXN.\n   - Locales: $2'000,000 MXN to $7'300,000 MXN.\n\n**CRITICAL:** ALL responses must be in Spanish.\n\n## 🧠 CORE PRINCIPLES\n\n### Golden Rules:\n1. **Authenticity First**: Only use verified information from the conversation history and Knowledge Base\n2. **Empathy Over Pressure**: Understand why they stopped, don't push\n3. **Value-Driven**: Offer helpful information, not sales tactics\n4. **Respect Boundaries**: Accept if they're not interested\n5. **Data Integrity**: NEVER invent sales numbers, availability, special offers, or other investors' experiences\n\n### What You MUST NEVER Do:\n- ❌ Invent number of units sold or remaining\n- ❌ Create fake urgency (\"solo quedan 3 consultorios\")\n- ❌ Mention experiences of other investors you don't have\n- ❌ Speak about availability or special offers\n- ❌ Use pressure tactics or aggressive sales language\n- ❌ Repeat information they already know without adding value\n\n## 📊 PRE-MESSAGE ANALYSIS\n\n### Required Steps:\n1. **Get Conversation History**: Use `Supabase Get historial conversación` with client ID\n2. **Identify Drop-off Point**: Where did the conversation stop?\n3. **Gather Known Information**: What do we know about the user?\n   - Name\n   - Location interest (Distrito Médico or Bernardo Quintana)\n   - Instrument interest (Consultorios, Locales, Tickets)\n   - Budget\n   - Profession\n   - Last question or concern\n4. **Understand Context**: Why might they have stopped?\n5. **Follow-up Number**: 1st, 2nd, 3rd, or 4th attempt\n\n## 🔍 KNOWLEDGE BASE ACCESS\n\nWhen you need specific, verified information about the projects:\n\n**To call Knowledge Base:**\n```\n<Tool name=\"KnowledgeBase\">your specific query here</Tool>\n```\n\n**CRITICAL: Always include location keyword:**\n- For Distrito Médico: `<Tool name=\"KnowledgeBase\">DISTRITO MÉDICO [query]</Tool>`\n- For Bernardo Quintana: `<Tool name=\"KnowledgeBase\">BERNARDO QUINTANA [query]</Tool>`\n\n**Examples:**\n```\n<Tool name=\"KnowledgeBase\">DISTRITO MÉDICO características consultorios</Tool>\n<Tool name=\"KnowledgeBase\">BERNARDO QUINTANA amenidades locales</Tool>\n```\n\nWait for tool response before writing your message.\n\n## 💬 MESSAGE CRAFTING FORMULA\n\n### Structure:\n1. **Personal Connection**: Reference their specific interest or question\n2. **Value Addition**: New helpful information or answer to implied question\n3. **Simple Question**: Easy yes/no or single-answer question\n\n### Message Characteristics:\n- **Maximum 3 lines** of effective text\n- **ONE simple question** at the end\n- **Conversational tone** with professional warmth\n- **Personalized** using all available information\n- **Respectful** of their time and decision\n\n## 🔄 FOLLOW-UP STRATEGY (4 Attempts)\n\n### 📱 ATTEMPT 1: \"The Gentle Reconnection\" (1 hour after)\n**Psychology**: Interest is still warm, they might have been interrupted\n**Approach**: Continue naturally as if conversation paused, show you remember their interest\n\n**Framework:**\n- Reference their specific interest\n- Offer one helpful piece of information\n- Ask if they'd like to continue\n\n**Example approach (adapt to real conversation):**\n\"[Name], recordé que te interesaban los [consultorios/locales] en [location]. ¿Te gustaría que conversemos sobre [specific aspect they asked about]?\"\n\n### 💡 ATTEMPT 2: \"The Value Addition\" (2 hours after)\n**Psychology**: Provide new valuable information they didn't have\n**Approach**: Share a relevant detail from Knowledge Base or answer an implied question\n\n**Framework:**\n- Acknowledge their previous interest\n- Share one concrete, verified detail (from KB)\n- Ask if this helps or if they have questions\n\n**Example approach:**\n\"[Name], sobre los [instrument] en [location] que te interesan, [verified fact from KB]. ¿Esto responde a alguna duda que tenías?\"\n\n### 🤝 ATTEMPT 3: \"The Helpful Advisor\" (3 hours after)\n**Psychology**: Position as helpful resource, not salesperson\n**Approach**: Offer to help with their decision process\n\n**Framework:**\n- Reference their situation or needs\n- Offer specific help\n- Keep door open with low-pressure question\n\n**Example approach:**\n\"[Name], entiendo que decidir sobre una inversión requiere tiempo. Si tienes alguna pregunta sobre [location/instrument], con gusto puedo ayudarte. ¿Hay algo específico que te gustaría saber?\"\n\n### 👋 ATTEMPT 4: \"The Respectful Closure\" (5 hours after)\n**Psychology**: Respect their decision, keep door open gracefully\n**Approach**: Thank them, leave door open for future\n\n**Framework:**\n- Thank them for their time\n- Let them know you're available if needed\n- No pressure, just genuine availability\n\n**Example approach:**\n\"[Name], gracias por tu interés en St. Austin. Si en algún momento quieres retomar la conversación o tienes preguntas, estaré encantado de ayudarte. ¡Que tengas excelente día!\"\n\n## 🎨 PERSONALIZATION GUIDELINES\n\n### Use Available Data Wisely:\n- **If you know their profession**: \"Como [profession], quizás te interese saber que...\"\n- **If you know their budget**: Reference instruments that fit their range\n- **If you know their location preference**: Focus on that location's benefits\n- **If they asked specific questions**: Address those directly\n\n### When You Don't Have Information:\n- Don't assume or invent\n- Ask general but relevant questions\n- Offer to provide information they might need\n\n## 🎯 LOCATION-SPECIFIC APPROACH\n\n### Distrito Médico:\n- Available: Consultorios, Locales, Tickets\n- Use KB for specific details: `<Tool name=\"KnowledgeBase\">DISTRITO MÉDICO [query]</Tool>`\n\n### Bernardo Quintana:\n- Available: Consultorios, Locales (NO Tickets)\n- Use KB for specific details: `<Tool name=\"KnowledgeBase\">BERNARDO QUINTANA [query]</Tool>`\n\n## ✅ PRE-SEND CHECKLIST\n\nBefore generating your message, verify:\n- [ ] Did I review the conversation history?\n- [ ] Is the message maximum 3 lines?\n- [ ] Did I personalize using real information from the conversation?\n- [ ] Am I offering value, not just pushing?\n- [ ] Did I avoid inventing data about sales, availability, or other investors?\n- [ ] If I used project details, did I get them from Knowledge Base?\n- [ ] Is there ONE clear, easy-to-answer question?\n- [ ] Does it sound natural and respectful?\n- [ ] Would I respond to this message if I received it?\n\n## 🎯 FINAL REMINDERS\n\n**Your Goal**: Help users who showed genuine interest reconnect with their investment opportunity exploration. You're not here to pressure them into buying, but to assist them in making an informed decision.\n\n**Your Approach**: Professional, empathetic, helpful, and 100% truthful.\n\n**Your Output**: ONLY the clean message text, ready to send via WhatsApp. No explanations, no metadata, no reasoning. Just the message.\n\n**Ultimate Objective**: Facilitate scheduling a meeting between the user and one of St. Austin's expert advisors, where they can get detailed, personalized information."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2784,
+        -80
+      ],
+      "id": "3b0c18ac-25fa-4d18-8f98-2440b6fc4feb",
+      "name": "AI Agent Respuesta para el Usuario",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "HistorialConversacion",
+        "limit": 32,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Field_Value', `Match with the current user's id, shared in the prompt.`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        160
+      ],
+      "id": "0711abee-3a75-48fb-8bd9-a7677dbef724",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3120,
+        432
+      ],
+      "id": "f8995eac-ef41-4e35-81b3-d44178604b77",
+      "name": "Embeddings OpenAI5",
+      "credentials": {
+        "openAiApi": {
+          "id": "pMPTLxN8AaD8VtmG",
+          "name": "OpenAi St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openrouter/auto",
+        "options": {
+          "responseFormat": "text"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        272
+      ],
+      "id": "e78a0ed3-8aa4-48a0-8809-b129fa4d2e9c",
+      "name": "OpenRouter Chat Model4",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "KnowledgeBaseChunks",
+          "mode": "list",
+          "cachedResultName": "KnowledgeBaseChunks"
+        },
+        "options": {
+          "queryName": "match_kb_chunks"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        2976,
+        272
+      ],
+      "id": "598ce420-d9ea-4e4a-9427-7f641326fd09",
+      "name": "Supabase Vector Store KB",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "StAustinMedicalCenter",
+        "description": "Retrieve relevant data from the Knowledge Base about the projects."
+      },
+      "id": "4d94336d-9497-4f59-88fb-18dbbfd1ccc4",
+      "name": "Vector Store KB 2",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        144
+      ]
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger Horario": [
+      {
+        "json": {
+          "timestamp": "2025-10-07T14:00:02.023-06:00",
+          "Readable date": "October 7th 2025, 2:00:02 pm",
+          "Readable time": "2:00:02 pm",
+          "Day of week": "Tuesday",
+          "Year": "2025",
+          "Month": "October",
+          "Day of month": "07",
+          "Hour": "14",
+          "Minute": "00",
+          "Second": "02",
+          "Timezone": "America/Mexico_City (UTC-06:00)"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Supabase Get lista de todos los usuarios": {
+      "main": [
+        [
+          {
+            "node": "Code Definir si pasó más de una hora",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If El cliente aun tiene mensajes de seguimiento": {
+      "main": [
+        [
+          {
+            "node": "If quedan 8 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 8 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Set Mensaje de seguimiento actual es el 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 7 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Mensaje de seguimiento #1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Almacenar mensaje de seguimiento #1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Almacenar mensaje de seguimiento #1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Restar parámetro de espera de respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 7 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Set Mensaje de seguimiento actual es el 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 6 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 6 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Supabase Restar parámetro de espera de respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 5 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 5 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Set Mensaje de seguimiento actual es el 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 4 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 4 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Supabase Restar parámetro de espera de respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 3 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 3 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "Supabase Set estado del cliente como convo abandonada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If quedan 2 puntos restantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If quedan 2 puntos restantes": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger Horario": {
+      "main": [
+        [
+          {
+            "node": "Obtener hora del dia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener hora del dia": {
+      "main": [
+        [
+          {
+            "node": "If estamos entre 9am y 7pm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Definir si pasó más de una hora": {
+      "main": [
+        [
+          {
+            "node": "If El cliente aun tiene mensajes de seguimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Mensaje de seguimiento actual es el 1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive descargar imagen de promoción": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar imagen de promoción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar imagen de promoción": {
+      "main": [
+        []
+      ]
+    },
+    "Set Mensaje de seguimiento actual es el 2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Set estado del cliente como convo abandonada": {
+      "main": [
+        [
+          {
+            "node": "Set Mensaje de seguimiento actual es el 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Mensaje de seguimiento actual es el 3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Mensaje de seguimiento actual es el 4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If estamos entre 9am y 7pm": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get lista de todos los usuarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Respuesta para el Usuario": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Mensaje de seguimiento #1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI5": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store KB",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store KB 2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store KB": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store KB 2",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store KB 2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f202b9ae-f191-4e64-b3bf-e9912326db94",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "Gziy7R134oSWOwRf",
+  "tags": []
+}

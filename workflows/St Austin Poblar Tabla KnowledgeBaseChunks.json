@@ -1,0 +1,387 @@
+{
+  "name": "St Austin Poblar Tabla KnowledgeBaseChunks",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2416,
+        128
+      ],
+      "id": "1e43bdc9-c998-4163-917d-2ef1190523ed",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pMPTLxN8AaD8VtmG",
+          "name": "OpenAi St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "idDocumento",
+                "value": "={{ $('Code Acomodar contenido de la tabla KnowledgeBaseDocumento').item.json.idDocumento }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -2288,
+        80
+      ],
+      "id": "c9b25f09-b196-4451-8ae1-f677b681e822",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 2000
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -2176,
+        224
+      ],
+      "id": "09ae1f9c-878d-4447-a8c3-db2283a9e2b0",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -3280,
+        0
+      ],
+      "id": "9c88c747-0c31-4175-85bc-de36836c2743",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1696,
+        0
+      ],
+      "id": "33259291-e4db-4b63-ac80-7b55838b5fc9",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "KnowledgeBaseChunks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idChunk",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get KB chunks').first().json.idChunk }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idDocumento",
+              "fieldValue": "={{ $json.metadata.idDocumento }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        112
+      ],
+      "id": "2b1d3e33-ad9b-4232-bf5f-b577ee9c053a",
+      "name": "Supabase Update tabla PropiedadEmbeddings con idPropiedad",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        -96
+      ],
+      "id": "7be75ef8-d4b1-4595-b051-30bb370ec635",
+      "name": "Fin de la operación"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "KnowledgeBaseChunks",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        0
+      ],
+      "id": "1c8b5918-e1b0-4286-a9e3-67558ab88fdf",
+      "name": "Supabase Get KB chunks",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "KnowledgeBaseChunks",
+          "mode": "list",
+          "cachedResultName": "KnowledgeBaseChunks"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        -2336,
+        -96
+      ],
+      "id": "12ed4e64-f305-420c-ad83-c769fb697c4f",
+      "name": "Supabase Vector KB chunks",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mapeo de IDs de ubicación a etiquetas\nconst ubicaciones = {\n  1: 'Distrito Médico',   // Distrito Médico\n  2: 'Bernardo Quintana', // Bernardo Quintana\n};\n\nreturn items.map(item => {\n  const p = item.json;\n\n  // Resuelve la ubicación\n  const ubicacion = ubicaciones[p.idUbicacion] ?? `ID_${p.idUbicacion}`;\n\n  // Construye la cadena única\n  const contenido = [\n    `Ubicación: ${ubicacion}`,\n    `Título: ${p.titulo}`,\n    `Detalles: ${p.detalles}`\n  ].join('\\n');\n\n  return {\n    json: {\n      idDocumento: p.idDocumento,\n      contenido\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2624,
+        0
+      ],
+      "id": "9118aee8-fc8a-43eb-a3d1-a6fcf34d4cca",
+      "name": "Code Acomodar contenido de la tabla KnowledgeBaseDocumento"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "KnowledgeBaseDocumento",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -2848,
+        0
+      ],
+      "id": "d4783dd8-9a18-4663-ba75-543f20a53cb6",
+      "name": "Supabase Get tabla KnowledgeBaseDocumento",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "KnowledgeBaseChunks",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idChunk",
+              "condition": "gt",
+              "keyValue": "0"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -3056,
+        0
+      ],
+      "id": "d8a5f026-6ee9-4d92-b99e-f6de9b95af80",
+      "name": "Supabase Eliminar tabla KnowledgeBaseChunk",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector KB chunks",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector KB chunks",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Supabase Eliminar tabla KnowledgeBaseChunk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Fin de la operación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase Update tabla PropiedadEmbeddings con idPropiedad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Update tabla PropiedadEmbeddings con idPropiedad": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get KB chunks": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector KB chunks": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get KB chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Acomodar contenido de la tabla KnowledgeBaseDocumento": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector KB chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get tabla KnowledgeBaseDocumento": {
+      "main": [
+        [
+          {
+            "node": "Code Acomodar contenido de la tabla KnowledgeBaseDocumento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Eliminar tabla KnowledgeBaseChunk": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get tabla KnowledgeBaseDocumento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "573b98f1-4595-45da-83fa-036f64a187c4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "ASt8MqbMvMjSzU60",
+  "tags": []
+}

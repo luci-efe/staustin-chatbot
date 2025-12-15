@@ -1,0 +1,439 @@
+{
+  "name": "St Austin Actualizar Apuntador Siguiente Asesor",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        480,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "RoundRobinPointer",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        704,
+        544
+      ],
+      "id": "0d6e30e2-0c26-48e5-a863-2171eea954df",
+      "name": "Supabase Get tabla RR pointer",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "98a5a8b1-fd4e-4ec5-9cc3-63210a38fc37",
+              "name": "siguienteAsesor",
+              "value": "={{ $('Supabase Get tabla RR pointer').item.json.siguienteAsesor + 1 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1152,
+        448
+      ],
+      "id": "a9dd37a1-add6-4d78-8099-8f9e01ed18aa",
+      "name": "Set siguiente asesor + 1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "98a5a8b1-fd4e-4ec5-9cc3-63210a38fc37",
+              "name": "siguienteAsesor",
+              "value": "=1",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1152,
+        640
+      ],
+      "id": "69e44728-8f6e-4179-918a-fd9c173d8a42",
+      "name": "Set siguiente asesor = 1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "keyValue": "={{ $json.siguienteAsesor }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        544
+      ],
+      "id": "acfec98b-08b7-4c54-ae92-2c19adbabc32",
+      "name": "Supabase Get siguiente asesor",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "53c02fbf-dd97-47f0-9606-6f6dfcabd6c6",
+              "leftValue": "={{ $('Supabase Get siguiente asesor').first().json.puntaje }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        544
+      ],
+      "id": "55175df7-b721-40d8-84ca-ea9b16094c4a",
+      "name": "If el asesor tiene puntos negativos"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idAsesor",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get siguiente asesor').first().json.idAsesor }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "puntaje",
+              "fieldValue": "={{ $('Supabase Get siguiente asesor').first().json.puntaje - 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        448
+      ],
+      "id": "ef4e7fa7-adb7-45f7-b9e5-0a5a2306a5a4",
+      "name": "Supabase Restar puntos negativos al asesor",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "RoundRobinPointer",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "siguienteAsesor",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get tabla RR pointer').first().json.siguienteAsesor }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "siguienteAsesor",
+              "fieldValue": "={{ $('Supabase Get siguiente asesor').first().json.idAsesor }}"
+            },
+            {
+              "fieldId": "correoAsesor",
+              "fieldValue": "={{ $('Supabase Get siguiente asesor').first().json.correoAsesor }}"
+            },
+            {
+              "fieldId": "nombreAsesor",
+              "fieldValue": "={{ $('Supabase Get siguiente asesor').first().json.nombreAsesor }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        544
+      ],
+      "id": "f53ae025-d33d-45ae-bb32-5042dde49dc1",
+      "name": "Supabase Update tabla RR pointer",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        640
+      ],
+      "id": "9e6201da-efe4-4f9e-9ebf-33ce1a3833cc",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "32p99TZsLA8eTddr",
+          "mode": "list",
+          "cachedResultName": "St Austin — St Austin Actualizar Apuntador Siguiente Asesor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        448
+      ],
+      "id": "d20a397f-519f-42a2-b0ac-fe25c90cc07e",
+      "name": "Execute Workflow Again"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "589320a2-3ac0-4048-8b5f-0ac33ee2c5c7",
+              "leftValue": "={{ $json.siguienteAsesor }}",
+              "rightValue": 9,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        544
+      ],
+      "id": "54e5f5f8-db92-45a9-be3f-f75b83856090",
+      "name": "If el id del asesor es menor a 9"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Número de teléfono": "5213311400415",
+          "Responsable": "Lluvia",
+          "Nombre": "Fernando Ramos",
+          "Correo electrónico": "fr@tendencia.ai",
+          "¿Tiene cita agendada?": true
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get tabla RR pointer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get tabla RR pointer": {
+      "main": [
+        [
+          {
+            "node": "If el id del asesor es menor a 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set siguiente asesor + 1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get siguiente asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get siguiente asesor": {
+      "main": [
+        [
+          {
+            "node": "Supabase Update tabla RR pointer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If el asesor tiene puntos negativos": {
+      "main": [
+        [
+          {
+            "node": "Supabase Restar puntos negativos al asesor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Restar puntos negativos al asesor": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set siguiente asesor = 1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get siguiente asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Update tabla RR pointer": {
+      "main": [
+        [
+          {
+            "node": "If el asesor tiene puntos negativos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If el id del asesor es menor a 9": {
+      "main": [
+        [
+          {
+            "node": "Set siguiente asesor + 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set siguiente asesor = 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3922da6f-9d60-4f14-9633-9978ea9eeb8c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "32p99TZsLA8eTddr",
+  "tags": []
+}

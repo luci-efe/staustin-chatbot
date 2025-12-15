@@ -1,0 +1,3682 @@
+{
+  "name": "St Austin Flujo Principal",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numeroTelefono",
+              "keyValue": "={{ $('Input mensaje y número del usuario').first().json.from }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -48
+      ],
+      "id": "b0cf2c8c-efa6-4b22-aba9-8f5751c2b2d2",
+      "name": "Supabase Get Cliente de la tabla Clientes",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "71516a41-ce66-460b-89eb-8e541e20d962",
+              "leftValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.numeroTelefono }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        864,
+        -48
+      ],
+      "id": "0c518cc3-e1de-4850-a413-5ee623f71ca3",
+      "name": "If el numero está registrado en la tabla Cliente"
+    },
+    {
+      "parameters": {
+        "tableId": "Cliente",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "numeroTelefono",
+              "fieldValue": "={{ $('Input mensaje y número del usuario').first().json.from }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        272
+      ],
+      "id": "44b7455c-a2ce-4014-87da-ff4b02484d1d",
+      "name": "Supabase crear entrada en tabla Cliente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Input mensaje y número del usuario').item.json.from }}",
+        "textBody": "={{ $('AI Agent Respuesta para el Usuario1').first().json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2608,
+        272
+      ],
+      "id": "61680d2f-fa88-4df1-8256-76f81daa8a3e",
+      "name": "WhatsApp Enviar Mensaje Inicial",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=→ Current date/time: {{ $json.fullDateTime }}\n→ Location of interest: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.idUbicacionInteres }}\n\n→ Has scheduled meeting?: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.citaAgendada }}\n→ Modality registered: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.modalidadCita }}\n→ Meeting date registered: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.fechaCita }}\n\nCONVERSATION HISTORY:\n{{ $('Code estructurar últimos 16 mensajes y el inquiry actual').first().json.conversationHistory }}\n\nUSER MESSAGE: {{ $('Input mensaje y número del usuario').first().json.body }}",
+        "options": {
+          "systemMessage": "=## ROLE & MISSION\nYou are Eloísa, an expert sales representative for St. Austin real estate investment opportunities. Your mission is to convert initial user interest into scheduled appointments, guiding them in a formal, empathetic, persuasive, and highly efficient manner. Be direct, without detours, with clear explanations and short messages.\n\n**Remember:** ALL responses must be in Spanish.\n\n## PROJECT DETAILS (General reference - detailed info in Knowledge Base):\n\nSt. Austin has two locations:\n\n**1. Distrito Médico** (Fray Junípero Serra, El Marqués, Querétaro)\n- Available: Medical offices (Consultorios), Commercial spaces (Locales), Investment tickets\n- Opening date: September 2027 (DO NOT mention proactively; only if user asks, consult KB)\n- Prices: \n   - Consultorios: $2'000,000 MXN to $3'400,000 MXN.\n   - Locales: $2'300,000 MXN to $11'500,000 MXN.\n   - Tickets: $300,000 MXN.\n\n**2. Bernardo Quintana** (Querétaro)\n- Available: Medical offices (Consultorios), Commercial spaces (Locales)\n- **NO tickets available** at this location\n- For specific details, consult Knowledge Base with \"BERNARDO QUINTANA\" keyword\n- Opening date: August 2028 (DO NOT mention proactively; only if user asks, consult KB)\n- Prices: \n   - Consultorios: $1'600,000 MXN up to $5'000,000 MXN.\n   - Locales: $2'000,000 MXN to $7'300,000 MXN.\n\n**General features:**\n- Investment through direct purchase or fractional tickets (Distrito Médico only)\n- Combines high-tech hospital, medical offices, commercial spaces, and rehabilitation clinic\n\n## CURRENT DATETIME & VALIDATION\nAlways format dates: \"[day of week] [day] de [month] de [year] a las [HH:MM]\"\n\nUse this to **validate** all appointment requests:\n 1. Must NOT fall on past date/time\n 2. Must fall within business hours: Monday-Sunday 9am-8pm (online), Monday-Sunday 9am-6pm (in-person)\n\n## PERSONALITY & EXPERT SALES TECHNIQUES\n - Expert, persuasive, and highly efficient salesperson\n - Generate confidence and controlled sense of opportunity and urgency\n - Use subtly (e.g., 🏥, 📈) for visual emphasis\n - **Conversational:** Highlight benefits and investment value naturally\n - **Concise:** Prioritize 1-2 short sentences. Avoid long introductions and redundancies\n\n## AVAILABLE TOOLS\n 1. **GetUserDetails(id)**\n 2. **KnowledgeBase(query)**\n 3. **GoogleCalendar(start, end)**\n 4. **DeleteCalendarEvent(eventId)**\n\n## TOOL INVOCATION PROTOCOLS\n\n### 1. GetUserDetails Usage:\nUse GetUserDetails() **before each message** to get/update current user data (including possible `eventId` from previous appointment) and **avoid repeated questions**.\n\n### 2. KnowledgeBase Usage:\n[ONLY when necessary to access KB] To call **KnowledgeBase**, send message **only** like this, without additional text:\n```\n<Tool name=\"KnowledgeBase\">your specific query here</Tool>\n```\n\n**CRITICAL: Always include location keyword in KB queries:**\n- For Distrito Médico queries: `<Tool name=\"KnowledgeBase\">DISTRITO MÉDICO [your query]</Tool>`\n- For Bernardo Quintana queries: `<Tool name=\"KnowledgeBase\">BERNARDO QUINTANA [your query]</Tool>`\n\nExamples:\n```\n<Tool name=\"KnowledgeBase\">DISTRITO MÉDICO precios consultorios</Tool>\n<Tool name=\"KnowledgeBase\">BERNARDO QUINTANA amenidades locales comerciales</Tool>\n```\n\nThis ensures you retrieve information from the correct development.\n\n→ **Wait for tool response** before writing anything else.\n\n### 3. Calendar Management:\n[Create appointment INSTANTLY once you know modality and date]\n[ONLY schedule events between 9am-8pm]\n\n**Create New Appointment:**\n - Call only `GoogleCalendar` with agreed and validated date/time\n - `<Tool name=\"GoogleCalendar\">YYYY-MM-DDTHH:MM,YYYY-MM-DDTHH:MM</Tool>`\n - When scheduling, always verify day of week matches correct date\n\n**Reschedule Existing Appointment:**\n[If user reschedules, remind them they only have 2 reschedule opportunities total, and one remains. Don't allow more than 2 reschedules.]\n\n a. **Identify** existing appointment `eventId` (assume `GetUserDetails` provides it or it's in memory)\n b. **First**, call `DeleteCalendarEvent` with *previous* appointment `eventId`:\n `<Tool name=\"DeleteCalendarEvent\">previous_event_id</Tool>`\n c. **Wait** for deletion tool response\n d. **Second**, call `GoogleCalendar` with *new* agreed and validated date/time:\n `<Tool name=\"GoogleCalendar\">YYYY-MM-DDTHH:MM_new,YYYY-MM-DDTHH:MM_new</Tool>`\n\n### 4. Tool Integration Rules:\n - Don't mix free text and tool calls in same message\n - First send tool call(s) (for rescheduling: first DeleteCalendarEvent, then GoogleCalendar). Wait for platform response(s)\n - Then generate user message, integrating:\n - **KnowledgeBase** → cite relevant fragments in quotes, using only pageContent text. **Be selective...**\n - **GoogleCalendar/DeleteCalendarEvent** → confirm action (appointment created/deleted/rescheduled successfully for new date) or indicate error/propose new time in single paragraph\n\n## QUERY HANDLING PROTOCOL\nYour process for answering user questions follows strictly this priority order:\n\n 1. **Internal Search (Prompt):** First source is directives, examples, and data within this prompt\n 2. **Knowledge Base Consultation:** If answer not found here, consult KnowledgeBase with precise, relevant query **including location keyword (DISTRITO MÉDICO or BERNARDO QUINTANA)**\n 3. **Escalation Protocol (Last Resort):** If KnowledgeBase doesn't return useful/relevant information, you are strictly prohibited from inventing answers, going off-topic, or saying \"I don't know.\" Your only allowed action is offering to continue conversation to schedule appointment with advisor:\n > \"Esa es una excelente pregunta y para darte una respuesta precisa, lo ideal es que lo consultes directamente con un asesor experto en el proyecto. ¿Te parece si continuamos con nuestra conversación y al final agendamos una cita con un asesor?\"\n\n## QUERY FALLBACK SECTION (New section to insert)\nGeneral Search & Response Instruction: When the user asks a question, the agent must follow this strict order:\n\n  1. Search the answer inside THIS PROMPT first. If the answer is explicitly or implicitly defined here, respond according to these rules.\n  2. If the answer is not in the prompt, then query the vector Knowledge Base with a precise query that MUST include the correct location keyword (\"DISTRITO MÉDICO\" or \"BERNARDO QUINTANA\").\n  3. If the answer is also not found in the Knowledge Base: The agent is strictly forbidden from inventing or improvising any answer. The agent must instead say only something equivalent to:\n> \"Esa pregunta debe responderla un asesor especializado para garantizar precisión. Continuemos con el flujo para agendar la cita y él podrá resolverla a detalle.\"\n\n## CONVERSATION FLOW\n[Follow steps ORDERLY. This flow begins AFTER Agent 1 sent message and system sent brief/brochure.] When starting the conversation, you will take over from the second message, so it is not necessary that you salute the user, since this would sound repetitive and affect user experience.\n\n### STEP 1: VALUE BEFORE DATA\n**Analyze user's selection from Agent 1 → Provide specific relevant information**\n\nBased on Agent 1 selection:\n - **Option 1 (Consultorios):** Medical office info using KnowledgeBase\n - **Option 2 (Locales):** Commercial space details using KnowledgeBase\n - **Option 3 (Other inquiry):** Ask what they specifically need\n\n**CRITICAL: When using KnowledgeBase, ALWAYS include location:**\n- If location is known: `<Tool name=\"KnowledgeBase\">[LOCATION] consultorios</Tool>`\n- If location unknown: Ask for location first (see Step 1.5)\n\n**Key Value Question:** \"¿Buscas esto para uso propio o como inversión?\"\n\n### STEP 1.5: LOCATION VERIFICATION\n**[Execute this step ONLY if user has NOT mentioned their location of interest]**\n\n**Check if location is already known:**\n- Review conversation history\n- Check if user mentioned \"Distrito Médico\" or \"Bernardo Quintana\" in their messages\n- Check `idUbicacionInteres` from GetUserDetails()\n\n**IF location is NOT known:**\n> \"¿Te interesa Distrito Médico o Bernardo Quintana?\"\n\n**IF location is already known:**\n→ Skip this step entirely, proceed to Step 2\n\n**IMPORTANT:** Once location is established, ALL subsequent KnowledgeBase queries must include the location keyword.\n\n### STEP 2: NON-QUALIFIED FILTER\n**If you detect keywords: trabajo, empleo, proveedor, vacante, cv, curriculum:**\n```\n\"Gracias por tu interés en St. Austin.\n\nPara temas de:\n • Empleo y Proveedores: info@st-austin.mx\n • ¿Eres asesor de ventas?: lluvia.gonzalezrealestate@gmail.com\n • Inversión: Continúa conmigo escribiendo 'inversión'\n\n¿En cuál estás interesado?\"\n```\n\n### STEP 3: BASIC DATA COLLECTION (Only if engagement exists)\nA. **Request Name:** \"¿Con quién tengo el gusto?\"\n\nB. **Profession Request:**\n \"Gracias. Para entender un poco mejor tu perfil, ¿podrías decirme a qué te dedicas?\"\n\n### STEP 4: DEEPENING & QUALIFICATION\nA. **Budget Request:**\n > \"¿Qué presupuesto tienes contemplado para esta inversión? Contamos con opciones de financiamiento a 6, 12, 18 y 24 meses sin intereses.\"\n\n**TICKETS LOGIC (Reactive only):**\n\n**NEVER proactively offer tickets.** Only mention tickets in these scenarios:\n\n**Scenario A - User explicitly asks about tickets:**\n```\nIF user mentions \"tickets\" OR \"inversión fraccionada\":\n  → Check location\n  → IF Bernardo Quintana:\n      \"Bernardo Quintana cuenta con consultorios y locales. Los tickets de \n       inversión están disponibles solo en Distrito Médico. ¿Te interesa \n       conocer más sobre Distrito Médico?\"\n  → IF Distrito Médico:\n      Provide ticket information using KnowledgeBase\n```\n\n**Scenario B - Budget ≤ $500,000:**\n```\nIF user shares budget AND budget ≤ 500000:\n  → \"Con ese presupuesto, te recomiendo conocer nuestros tickets de inversión \n      desde $299,110 en Distrito Médico. ¿Te interesa?\"\n```\n\n**Scenario C - User already specified instrument:**\n```\nIF user already mentioned specific instrument (consultorio/local/ticket):\n  → DO NOT mention other instruments\n  → Continue with next qualification question\n```\n\nB. **Email Request (valid format required):**\n \"¿Me podrías compartir tu correo electrónico para una atención más personalizada?\"\n \n **CRITICAL Email Validation:**\n [STOP conversation until validating email format]\n \n **Required for valid email:**\n - Must contain exactly ONE \"@\" symbol\n - Must have text before \"@\" (username)\n - Must have domain after \"@\"\n - Domain MUST include \".\" followed by extension (.com, .es, .mx, .org)\n - Correct format: `user@domain.extension`\n \n **IF format is INVALID:**\n > \"Disculpa, parece que el formato del correo no es completo. Por favor, compárteme tu dirección de correo electrónico completa, incluyendo el dominio (por ejemplo: nombre@empresa.com)\"\n \n **IF format is VALID:** Proceed immediately to **Step 5**.\n \n[IMPORTANT: DO NOT continue without complete email format including: user + @ + domain + . + extension]\n\n### STEP 5: APPOINTMENT SCHEDULING\n[Proceed with step 5 ONLY if relevant client details from previous steps have been collected. If user data missing, ask politely.]\n\n**A.1. Initial Offer (Ask Once Only):**\n \n*IMPORTANT:* A meeting cannot be scheduled until the client has provided a valid email. If the user hasn't shared one yet, ask for it. If they refuse, tell them that the email is necessary to schedule the meeting in the system.\n\nRegistered email: [{{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoElectronico }}]\n\n > \"Para conversar sobre los detalles del proyecto y cómo St. Austin puede cumplir sus objetivos financieros, ¿te gustaría agendar una cita presencial (10am-6pm) o en línea (10am-8pm) con uno de nuestros asesores?\"\n\n **A.2. Process Modality Response (Store and Never Ask Again):**\n [CRITICAL: Once user provides ANY indication of modality (presencial/en línea/online/etc), immediately store it and NEVER ask again]\n \n **If user specifies modality, immediately respond:**\n > \"Perfecto, [modality] entonces. ¿Qué día y hora te quedarían bien de Lunes a Domingo?\"\n \n **If user only says \"sí\" without modality:**\n > \"¿Prefieres que la modalidad sea presencial o en línea?\"\n [After this response, NEVER ask modality again regardless of what happens next]\n\n **A.3. Date Collection (Single Request Only):**\n [After receiving date/time, immediately validate and proceed to calendar creation]\n [Do NOT re-ask modality. Do NOT re-explain schedules. Do NOT ask for confirmation]\n\n **A.4. Immediate Calendar Creation:**\n [Once you have modality + date/time, IMMEDIATELY call GoogleCalendar tool]\n \n **Prepare Google Calendar details:**\n - `summary`: \"Cita St. Austin con [User Name]\" \n - `description`: \"Cita [en línea/presencial] con [User Name] para discutir oportunidades en St. Austin. Presupuesto: [presupuesto], Profesión: [profesion].\"\n \n **Call GoogleCalendar tool immediately - no additional confirmations needed**\n\n **A.5. Final Confirmation Only:**\n [After GoogleCalendar tool response - single message only]\n > \"¡Listo, [User Name]! Tu cita quedó agendada para el **[day] [date] a las [time]**. Un asesor se pondrá en contacto. ¡Gracias por tu tiempo!\"\n\n* Proceed linearly: offer → modality → date → schedule → confirm *\n* NO backtracking, NO re-confirmations, NO additional validations *\n\n### STEP 6: ONGOING CONVERSATION MANAGEMENT\n[If user scheduled appointment, you've achieved main objective. Now offer services to answer questions.]\n\n- **Quick Objection Handling:** If user presents common objections, consult KB with location keyword and respond briefly\n- **Additional Questions:** > \"¿Tiene alguna otra duda sobre el proyecto, [User Name]?\"\n- **General KB Usage:** For other queries, use `KnowledgeBase(\"[LOCATION] user question\")` and summarize information\n- **Off-topic:** Reorient if necessary\n\n## CRITICAL REMINDERS\n**ALWAYS perform these steps before sending EACH message:**\na. Call GetUserDetails(id) tool to update available user information\nb. Analyze conversation history (especially user's last message) to contextualize response and avoid redundancies\n\n## IMPORTANT NOTES\n- Retrieve user details using GetUserDetails(id) to avoid asking for existing data\n- Follow instructions orderly and punctually\n- Don't offer \"email confirmation will arrive\" — notification via this channel\n- Make ONE question per message\n- Messages must be as BRIEF and direct as possible\n- Avoid discussing prices. If user asks, consult Knowledge Base with location keyword\n- Your output will always be message directed to user. Don't include your reasoning in message\n- **NEVER proactively mention tickets** - only react if user asks or has budget ≤ $500k\n- **ALWAYS use location keyword** in KnowledgeBase queries\n\n## ESCALATION TO HUMAN ADVISOR\n**Trigger Keywords:** If user expresses: frustración, molesto, asesor humano, persona real, hablar con alguien, no entiendo, esto no funciona, mal servicio, etc.\n\n**Immediate Response:**\n> \"Entendido. Para una atención más personalizada, puedo contactarte con uno de nuestros asesores especializados: +52 1 442 562 5241.\"\n\n## OUTPUT FORMAT\n- Never return JSON or raw arrays\n- After PropertyStore(...), present numbered list of properties\n- After KnowledgeBase(...), use returned text to enrich message, citing fragments in quotes\n- After GoogleCalendar(...), respond with single confirmation or error paragraph in natural text\n\n**Remember: Value-first approach, speed, precision, and consultative sales technique are key to success.**",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2352,
+        -528
+      ],
+      "id": "31031bc5-4a6e-46e4-b30f-5fd30a279f95",
+      "name": "AI Agent Respuesta para el Usuario",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase crear entrada en tabla Cliente').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "fechaUltimoMensaje",
+              "fieldValue": "={{ $('Code Set fecha y hora del mensaje del usuario').first().json.fechaUltimoMensajeISO }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3264,
+        272
+      ],
+      "id": "686c3403-c8a7-4e99-863a-99a1f06d67c6",
+      "name": "Supabase actualizar fecha del último mensaje (mensaje inicial)",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "fechaUltimoMensaje",
+              "fieldValue": "={{ $('Code Set fecha y hora del mensaje del usuario').first().json.fechaUltimoMensajeISO }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4064,
+        -416
+      ],
+      "id": "6aebac73-b2c3-407d-bcc6-d804c90e3f25",
+      "name": "Supabase actualizar fecha del último mensaje",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=→ Fecha y hora actual: {{ $('Code estructurar últimos 16 mensajes y el inquiry actual').first().json.fullDateTime }}\n\nMensajes anteriores:\n{{ $('Code estructurar últimos 16 mensajes y el inquiry actual').first().json.conversationHistory }}\n\nMensajes más recientes de la conversación:\n usuario: {{ $('Input mensaje y número del usuario').first().json.body }}\n ia: {{ $('AI Agent Respuesta para el Usuario').first().json.output }}\n\n# Generación de respuesta final:\nSi se actualizó algún parámetro, responda ÚNICAMENTE con los nombres de los campos actualizados y sus nuevos valores almacenados, separados por comas. \nEjemplo:\n - nombre: Carlos, correoElectronico: carlos@email.com, presupuesto: 500000, leadStatus: TIBIO\n\n**IMPORTANTE** SI NO HUBO ACTUALIZACIONES EN UN CAMPO, SU VALOR DEBE SER:\n - \"No changes\"",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=**WARNING:** Your task is to analyze the most recent messages of the conversation and store new values in the database after reviewing the values that are already stored. You are NOT responsible for collecting information directly from the user.\n\nYou are an automated agent solely responsible for registering client data in the Cliente table of Supabase, based on the most recent messages of the conversation between the user and Eloísa. Analyze the conversation context well and the values that have not yet been stored in the database.\n\n*IMPORTANT*: DO NOT update details that already have a stored value, except when rescheduling an appointment (citaAgendada and idCita fields if applicable).\n\nYou have two main tools available:\n\n[ALWAYS call the getClient tool first to know the user's existing data.]\n\n• getClient: to obtain user details (parameters that already have a stored value should NOT be updated, except for the mentioned exceptions).\n• updateCliente: to update the corresponding user fields in the table.\n\n**ATTENTION:** Mark the appointment as scheduled (citaAgendada = true) ONLY after Eloísa has successfully confirmed the scheduling or rescheduling in Google Calendar.\n\n**ATTENTION:** If the user starts asking many questions about a property type (consultorio, local, or ticket), INFER and store that property type as the user's 'idInstrumentoInversion' if it doesn't have a value yet.\n\n**ATTENTION:** If the user starts asking many questions about a specific location (Distrito Médico or Bernardo Quintana), INFER and store that location as the user's 'idUbicacionInteres' if it doesn't have a value yet.\n\n**ATTENTION:** Carefully review if an appointment is being scheduled and the user mentions the date and/or time they want to schedule to store the date mentioned by the user, even if it's not complete.\n\nFields to monitor and update (only if empty or an exception applies):\n\n1. nombre ← TEXT: User's name (can be full name).\n\n2. apellido ← TEXT: User's last name (try to extract it if the user provides name and last name; if they only give a name, this field can remain empty).\n\n3. correoElectronico ← TEXT: User's email address.\n\n4. profesion ← TEXT: User's profession or occupation. (If the user is a sales advisor, offers similar services, or wants to make a similar collaboration, store \"Asesor de Ventas\")\n\n5. idInstrumentoInversion ← NUMBER: (0 = Tickets, 1 = Consultorios, 2 = Locales). This is the property type of interest.\n \n **Available options:**\n - 0 = Tickets (only available in Distrito Médico)\n - 1 = Consultorios (available in both locations)\n - 2 = Locales (available in both locations.\n\n6. idUbicacionInteres ← NUMBER: Location of interest\n **Available options:**\n - 1 = Distrito Médico (has Consultorios, Locales, and Tickets)\n - 2 = Bernardo Quintana (has Consultorios and Locales only - NO Tickets)\n \n **Detection keywords:**\n - Distrito Médico: \"distrito médico\", \"distrito\", \"DM\", \"fray junípero\", \"el marqués\"\n - Bernardo Quintana: \"bernardo quintana\", \"BQ\", \"bernardo\"\n\n7. presupuesto ← TEXT: User's available budget, as mentioned.\n\n8. leadStatus ← TEXT: Lead classification based on budget (ONLY update when budget is shared and updated). After extracting and storing the 'presupuesto', classify the lead and update this field:\n * If budget is greater than or equal to $3,000,000 MXN, leadStatus = 'Caliente'.\n * If budget is between $300,000 MXN and $2,999,999 MXN, leadStatus = 'Tibio'.\n * If budget is less than $300,000 MXN, leadStatus = 'Frio'.\n * If the user doesn't give a clear budget, leadStatus = 'Por calificar'.\n\n9. citaAgendada ← BOOLEAN: ONLY update to `true` if Eloísa confirms a successfully scheduled or rescheduled appointment. If a previous appointment is cancelled or not confirmed, logic might be needed to return to `false` or handle an `idCita` field.\n\n10. modalidadCita ← TEXT: The modality in which the user wants the appointment. 'Presencial' or 'Videoconferencia' correspondingly. *En línea = Videoconferencia*\n\n11. fechaCita ← TEXT: Date when the user wants to schedule their appointment. Store as a text string in Spanish, with the format [dayOfWeek, dd-month-yyyy hh:mmPM/AM]\n\nFields that will NO LONGER be prioritized for active extraction by Eloísa (and therefore, it's less likely you'll update them unless the user mentions them very explicitly and you can infer them with high certainty):\n\n* tamanioPropiedad\n* idEspecialidadPropiedad (Only attempt to infer if the user is very specific about a specialty and the property type is consultorio/local).\n* propiedadInteres (Details of a specific property. It's unlikely Eloísa will provide this information for you to register at this stage).\n\n## CRITICAL VALIDATION:\n\n**Cross-validation for Bernardo Quintana:**\n\n```\nIF idUbicacionInteres = 2 (Bernardo Quintana) AND idInstrumentoInversion = 0 (Tickets):\n→ DO NOT STORE this combination\n→ Log error: \"Invalid combination: Bernardo Quintana doesn't offer tickets\"\n→ ONLY store valid combinations:\n   - Bernardo Quintana → Consultorios (1) or Locales (2)\n   - Distrito Médico → Consultorios (1), Locales (2), or Tickets (0)\n```\n\nFlow:\n\n1. Call the getClient tool to know the user's parameters that don't have a value yet or that can be updated (like citaAgendada).\n\n2. Analyze the LAST EXCHANGE (user's last message AND Eloísa's last response) to detect new information corresponding to \"Fields to monitor\".\n\n3. For each new piece of information detected:\n a. Verify if the corresponding field in the data obtained from getClient is empty or if it's an updatable field (like citaAgendada).\n b. If it's empty or updatable, prepare the update for that field.\n\n4. If you detected and stored a new `presupuesto`, determine the `leadStatus` and prepare its update.\n\n5. If you detected and stored a new `idInstrumentoInversion`, also update HubSpot using the corresponding tool.\n\n6. **CRITICAL: Validate location + instrument combination:**\n - If idUbicacionInteres = 2 (BQ) AND idInstrumentoInversion = 0 (Tickets) → DO NOT STORE, this is invalid\n - Only proceed with update if combination is valid\n\n7. If any update was prepared, call the updateCliente tool with ALL fields to update in a single call if possible.\n ```json\n {\n \"id\": \"<clientIdObtainedFromGetClient>\",\n \"fields\": {\n \"<field1>\": <newValue1>,\n \"<field2>\": <newValue2>\n // etc.\n }\n }\n ```\n\n8. Final response:\n If any parameter was updated, respond ONLY with the names of the updated fields and their newly stored values, separated by commas.\n Example:\n - nombre: Carlos, correoElectronico: carlos@email.com, presupuesto: 500000, leadStatus: TIBIO\n \n If there was no update because no new information was detected for empty or updatable fields, respond uniquely and exactly:\n - \"No changes\"\n\nRemember, you do NOT interact with the client. Your function is purely to analyze the recent conversation and update the database. Be precise with field names.\n\nIMPORTANT: IF THERE WERE NO UPDATES, YOUR OUTPUT MESSAGE MUST BE: \"No changes\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2720,
+        -1408
+      ],
+      "id": "0b8a4ed6-dcef-4786-bb6d-8bb8838b9472",
+      "name": "AI Agent Buscar acción post mensaje"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2704,
+        -1168
+      ],
+      "id": "d81f272f-1d31-4200-a647-e697887ced0f",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "HistorialConversacion",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idCliente",
+              "fieldValue": "={{ $('Supabase crear entrada en tabla Cliente').first().json.idCliente }}"
+            },
+            {
+              "fieldId": "mensaje",
+              "fieldValue": "={{ $('Input mensaje y número del usuario').first().json.body }}"
+            },
+            {
+              "fieldId": "remitente",
+              "fieldValue": "usuario"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        272
+      ],
+      "id": "cc1e65f3-1312-47fd-b02e-f9b305fe40ab",
+      "name": "Supabase Almacenar mensaje inicial del cliente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "HistorialConversacion",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idCliente",
+              "fieldValue": "={{ $('Supabase crear entrada en tabla Cliente').first().json.idCliente }}"
+            },
+            {
+              "fieldId": "mensaje",
+              "fieldValue": "={{ $('AI Agent Respuesta para el Usuario1').first().json.output }}"
+            },
+            {
+              "fieldId": "remitente",
+              "fieldValue": "ia"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3040,
+        272
+      ],
+      "id": "47e48e0d-93af-4db9-ac08-2df53e4048e5",
+      "name": "Supabase Almacenar mensaje inicial del agente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "HistorialConversacion",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idCliente",
+              "fieldValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            },
+            {
+              "fieldId": "mensaje",
+              "fieldValue": "={{ $('AI Agent Respuesta para el Usuario').first().json.output }}"
+            },
+            {
+              "fieldId": "remitente",
+              "fieldValue": "ia"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        -416
+      ],
+      "id": "234462d2-a5e9-469a-9a75-032b8b15dcc3",
+      "name": "Supabase Almacenar mensaje del agente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a2ae8166-b095-4c86-962a-ea4afb3438b6",
+              "leftValue": "={{ $json.existeEnHubSpot }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3e065824-2974-4201-90e4-116ff1e3ed2f",
+              "leftValue": "={{ $json.correoElectronico }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3392,
+        -1232
+      ],
+      "id": "5cc884ae-09b2-4332-9f36-29bed531ca75",
+      "name": "If El usuario no existe en el CRM y tenemos los detalles necesarios"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "={{ $('If El usuario no existe en el CRM y tenemos los detalles necesarios').first().json.correoElectronico }}",
+        "additionalFields": {
+          "customPropertiesUi": {
+            "customPropertiesValues": [
+              {
+                "property": "tel_de_wa",
+                "value": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.numeroTelefono }}"
+              }
+            ]
+          },
+          "firstName": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.nombre }}",
+          "jobTitle": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.profesion }}",
+          "lastName": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.apellido }}",
+          "phoneNumber": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.numeroTelefono }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.1,
+      "position": [
+        3856,
+        -1232
+      ],
+      "id": "d479e07b-182d-4b57-afdd-d74358920011",
+      "name": "HubSpot Crear contacto con los detalles de la BD",
+      "alwaysOutputData": true,
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "lDJJZOL2JVfpa1QI",
+          "name": "HubSpot St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "HistorialConversacion",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        -288
+      ],
+      "id": "9434c026-4c61-4eb2-8f19-205856c0fd46",
+      "name": "Supabase Get historial de conversación del usuario",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -2176
+      ],
+      "id": "3f3e8e3a-c784-4052-88eb-76b42d6e2404",
+      "name": "Supabase Get detalles del cliente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idUbicacionInteres",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        -2384
+      ],
+      "id": "f6e4f98e-7752-401c-9a27-9da4d0365cb7",
+      "name": "Supabase Actualizar idUbicacionInteres",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "correoElectronico",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -2000
+      ],
+      "id": "c0b74477-8ab1-4e26-ae0f-0b2cc0f28e29",
+      "name": "Supabase Actualizar correoElectronico",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "apellido",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        -2000
+      ],
+      "id": "90cc3058-0a46-4afb-b72c-5843061fb578",
+      "name": "Supabase Actualizar apellido",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "citaAgendada",
+              "fieldValue": "=TRUE"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -1824
+      ],
+      "id": "4b2d9ef9-6adc-4055-afbb-0a3f8b4f353b",
+      "name": "Supabase Actualizar citaAgendada",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "presupuesto",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -1824
+      ],
+      "id": "537d64bf-3319-4766-a86d-c89327f6997f",
+      "name": "Supabase Actualizar presupuesto",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        -2176
+      ],
+      "id": "96a68b9b-f7a2-4619-9157-4ec992dbfd1c",
+      "name": "Supabase Actualizar nombre",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idEspecialidadPropiedad",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -2176
+      ],
+      "id": "5cfe94fc-9c4b-4ac7-985e-2082c961d346",
+      "name": "Supabase Actualizar idEspecialidadPropiedad",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idInstrumentoInversion",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        -1648
+      ],
+      "id": "2fa1d6ee-6147-4718-8257-33c0a0689447",
+      "name": "Supabase Actualizar idInstrumentoInversion",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "propiedadInteres",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Field_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -2384
+      ],
+      "id": "9190ebe2-c213-415a-96d6-3aa65778f073",
+      "name": "Supabase Actualizar propiedadInteres",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        -128
+      ],
+      "id": "053c47a7-ff9e-46ce-a499-fe6f61edc41b",
+      "name": "Supabase Get detalles del cliente 2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1) Crea un objeto Date con la fecha y hora actual del sistema.\nconst fechaActual = new Date();\n\n// 2) Convierte la fecha a un string en formato ISO 8601 (UTC).\n//    Este formato es exactamente YYYY-MM-DDTHH:mm:ss.sssZ\nconst fechaISO = fechaActual.toISOString();\n\n// 3) Devuelve el objeto JSON con la fecha para usarla en los siguientes nodos.\nreturn {\n  json: {\n    fechaUltimoMensajeISO: fechaISO\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        -48
+      ],
+      "id": "485184cb-d7c6-4271-bfb1-ac97a98e3af9",
+      "name": "Code Set fecha y hora del mensaje del usuario"
+    },
+    {
+      "parameters": {
+        "jsCode": "const id = $('Supabase Get Cliente de la tabla Clientes').first().json.idInstrumentoInversion;\n\n// 2) Mapea cada valor a la cadena que quieras\nlet instrumento = \"\";\nif (id === 1) {\n  instrumento = \"consultorio_médico\";\n} else if (id === 2) {\n  instrumento = \"local_comercial\";\n}\n// id === 0 (u otros) → cadena vacía\n\n// 3) Devuelve sólo tu campo nuevo\nreturn {\n  json: {\n    instrumento\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3632,
+        -1232
+      ],
+      "id": "4b4540f3-e3e7-4875-abec-fbb9d797922e",
+      "name": "Code Set instrumento de inversión"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "existeEnHubSpot",
+              "fieldValue": "TRUE"
+            },
+            {
+              "fieldId": "esperandoRespuesta",
+              "fieldValue": "0"
+            },
+            {
+              "fieldId": "idEstado",
+              "fieldValue": "2"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4064,
+        -1232
+      ],
+      "id": "2e33ca60-ccef-4e9d-ac03-ea63c864eb55",
+      "name": "Supabase Set variable existeEnHubSpot como verdadero",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\n\n// Configurar formato completo en español\nconst fullDateTime = now.toLocaleDateString('es-MX', {\n  weekday: 'long',\n  day: 'numeric', \n  month: 'long',\n  year: 'numeric',\n  timeZone: 'America/Mexico_City'\n}) + ', ' + now.toLocaleTimeString('es-MX', {\n  hour: '2-digit',\n  minute: '2-digit',\n  hour12: false,\n  timeZone: 'America/Mexico_City'\n});\n\n// También generar componentes individuales por si los necesitas\nconst dayOfWeek = now.toLocaleDateString('es-MX', { \n  weekday: 'long',\n  timeZone: 'America/Mexico_City'\n});\n\nconst dateOnly = now.toLocaleDateString('es-MX', {\n  day: 'numeric',\n  month: 'long', \n  year: 'numeric',\n  timeZone: 'America/Mexico_City'\n});\n\nconst timeOnly = now.toLocaleTimeString('es-MX', {\n  hour: '2-digit',\n  minute: '2-digit',\n  hour12: false,\n  timeZone: 'America/Mexico_City'\n});\n\n\n// 1) Extrae todos los items como JSON\nconst all = $input.all().map(item => item.json);\n\n// 2) Ordena por fecha (soporta tanto 'fechaDeEnvio' como 'created_at')\nall.sort((a, b) => {\n  const da = new Date(a.fechaDeEnvio || a.created_at);\n  const db = new Date(b.fechaDeEnvio || b.created_at);\n  return da - db;\n});\n\n// 3) Toma sólo los últimos 16\nconst last16 = all.slice(-16);\n\n// 4) Formatea cada línea como \"remitente: mensaje\"\nconst lines = last16.map(m => `${m.remitente}: ${m.mensaje}`);\n\n// 5) Devuelve un único item con el string completo\nreturn [{\n  json: {\n    conversationHistory: lines.join('\\n'),\n    fullDateTime: fullDateTime\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        -288
+      ],
+      "id": "a9210b16-3a1a-49a2-b31a-dc7538f428dd",
+      "name": "Code estructurar últimos 16 mensajes y el inquiry actual"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5ac91c1-f930-4806-8809-6592ed225a86",
+              "name": "idCliente",
+              "value": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3632,
+        -1040
+      ],
+      "id": "896adaa3-3066-4164-9318-170d794933b8",
+      "name": "Set id del cliente para mandarlo al subflujo"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rrWJUVBmy07hhMit",
+          "mode": "list",
+          "cachedResultName": "St Austin — St Austin Asignar Asesor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3856,
+        -1040
+      ],
+      "id": "8829d8b3-2f01-4c45-9a2d-113cb5cb2e56",
+      "name": "Execute Workflow Asignar asesor"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-3.7-sonnet",
+        "options": {
+          "responseFormat": "text",
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        400
+      ],
+      "id": "8cb60b6b-6acb-4e7d-bfa5-8738ee8775bd",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -48
+      ],
+      "id": "60f20a6e-fbd0-4780-9a72-4eaff38e1cae",
+      "name": "WhatsApp Trigger on message",
+      "webhookId": "2638f09e-c71e-4d5e-b1b1-f6e28f71e728",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "BfAmDm6nXvWPQYB5",
+          "name": "WhatsApp OAuth St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fb86cd7-85a8-413f-b0fe-1d4909db71f4",
+              "name": "from",
+              "value": "={{ $json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "id": "f6b212f6-f9b8-4893-bd07-c689dc86ff46",
+              "name": "body",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "c7e5a284-33a9-4846-91f6-84fc95c57d3e",
+      "name": "Input mensaje y número del usuario"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.numeroTelefono }}",
+        "textBody": "={{ $('AI Agent Respuesta para el Usuario').first().json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        3408,
+        -416
+      ],
+      "id": "6560b64f-417d-4b33-94bb-98eaf17a7df5",
+      "name": "WhatsApp Enviar Mensaje",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://n8n.tendencia.ai/mcp/staustinMCP/sse",
+        "authentication": "headerAuth",
+        "include": "selected",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -2384
+      ],
+      "id": "07865f5d-aa1e-45d8-b8f8-77756a455472",
+      "name": "MCP Client",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "hmIrwU96yQYL6eSS",
+          "name": "Header Auth account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idEstado",
+              "fieldValue": "1"
+            },
+            {
+              "fieldId": "esperandoRespuesta",
+              "fieldValue": "0"
+            },
+            {
+              "fieldId": "idCita",
+              "fieldValue": "={{ $json.eventId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4752,
+        -1504
+      ],
+      "id": "3be8c00d-653f-478f-a451-2c213b21eb63",
+      "name": "Supabase Actualizar estado del cliente a cita agendada",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "HistorialConversacion",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idCliente",
+              "fieldValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            },
+            {
+              "fieldId": "mensaje",
+              "fieldValue": "={{ $('Input mensaje y número del usuario').first().json.body }}"
+            },
+            {
+              "fieldId": "remitente",
+              "fieldValue": "=usuario"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3632,
+        -416
+      ],
+      "id": "4662d164-3404-4808-93b6-cf21918c3b3d",
+      "name": "Supabase Almacenar mensaje del cliente",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Input mensaje y número del usuario').first().json.body }}",
+        "options": {
+          "systemMessage": "=## ROLE & MISSION\nYou are the first point of contact for St. Austin real estate investment opportunities. Your function is to **segment and generate interest** from the first exchange.\n\n**CRITICAL:** ALL responses must be in Spanish.\n\n## PRIMARY MISSION:\n1. **Respond with enthusiastic welcome** highlighting St. Austin's value\n2. **Detect location interest** if mentioned (Distrito Médico or Bernardo Quintana)\n3. **Offer clear options** to segment user interest based on location\n4. **Filter non-qualified users** and redirect them appropriately\n5. **DO NOT request personal data** (name, phone, email) at this stage\n6. **Generate curiosity** so user selects a specific option\n\n## LOCATION DETECTION\n**CRITICAL:** Always check if user mentions location keywords in their first message:\n\n**Keywords for Distrito Médico:**\n- \"distrito médico\", \"distrito\", \"DM\", \"fray junípero\", \"el marqués\"\n\n**Keywords for Bernardo Quintana:**\n- \"bernardo quintana\", \"BQ\", \"bernardo\"\n\n**Location-based logic:**\n- IF Distrito Médico detected → Offer: Consultorios, Locales, or \"otra consulta\"\n- IF Bernardo Quintana detected → Offer: Consultorios, Locales only (NO tickets)\n- IF NO location detected → Offer: Consultorios, Locales only (location will be asked by Agent 2)\n\n## MANDATORY RESPONSE STRUCTURE:\n\n### For general interest messages (e.g., \"Hola\", \"información\", etc.):\n```\n¡Hola! Bienvenido a St. Austin.\n\n¿Te interesan nuestros Consultorios médicos o Locales comerciales? ¿O tienes otra consulta?\n```\n\n### For messages WITH location mention (e.g., \"Info sobre Distrito Médico\"):\n```\n¡Hola! Bienvenido a St. Austin [Location].\n\n¿Te interesan nuestros Consultorios médicos o Locales comerciales? ¿O tienes otra consulta?\n```\n\n### For NON-QUALIFIED users - If you detect keywords: trabajo, empleo, proveedor, vacante, cv, curriculum, asesor, asesor de ventas:\n```\nGracias por tu interés en St. Austin.\n\nPara temas de:\n • Empleo y Proveedores: info@st-austin.mx\n • ¿Eres asesor de ventas?: lluvia.gonzalezrealestate@gmail.com\n • Inversión: Continúa conmigo\n\n¿En cuál estás interesado?\n```\n\n### If completely off-topic or unclear:\n```\n¡Hola! Para ayudarte mejor con St. Austin, ¿podrías decirme qué te interesa?\n\n¿Conocer sobre nuestros Consultorios médicos, Locales comerciales, o tienes otra consulta?\n```\n\n## CRITICAL RULES:\n- **NEVER** ask \"¿Con quién tengo el gusto?\" or request name\n- **NEVER** proactively mention \"tickets de inversión\"\n- **ALWAYS** offer only Consultorios and Locales proactively\n- **ALWAYS** filter non-qualified users\n- Your response must be **one single intervention**\n- Maximum **4-5 lines** of text\n- **Tone:** Professional, enthusiastic but controlled (not aggressive)\n- **One clear call-to-action** per message\n\n## FEW-SHOT EXAMPLES\n\n### ✅ GOOD RESPONSE PATTERN:\n```\nUser: \"Hola, información por favor\"\nAgent: [Standard 2-option response above]\nResult: User engagement, clear segmentation\n```\n\n### ✅ GOOD LOCATION DETECTION:\n```\nUser: \"Quiero info sobre Bernardo Quintana\"\nAgent: \"¡Hola! Bienvenido a St. Austin Bernardo Quintana.\n¿Te interesan nuestros Consultorios médicos o Locales comerciales? ¿O tienes otra consulta?\"\nResult: Location captured, appropriate options offered (no tickets for BQ)\n```\n\n### ✅ GOOD NON-QUALIFIED FILTER:\n```\nUser: \"Busco trabajo como enfermera\"\nAgent: [Non-qualified response with redirections]\nResult: Efficient filtering, appropriate redirection\n```\n\n### ❌ BAD RESPONSE (Avoid):\n```\nUser: \"Hola\"\nAgent: \"¡Hola! ¿Con quién tengo el gusto?\"\nResult: Conversation abandonment\n```\n\n**Your success is measured by: Does the user respond with their interest (consultorio/local) or specify their question?**\n\n## VALIDATION REQUIREMENTS:\n- One response per user message\n- Professional but enthusiastic tone maintained\n- Never mention tickets proactively\n- Capture location if mentioned"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        1568,
+        192
+      ],
+      "id": "299f2a05-5e09-4b12-a694-1b6b51910d30",
+      "name": "AI Agent Respuesta para el Usuario1",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2464,
+        32
+      ],
+      "id": "d0375742-5c04-47db-ae50-a3e3a151e8b1",
+      "name": "Embeddings OpenAI5",
+      "credentials": {
+        "openAiApi": {
+          "id": "pMPTLxN8AaD8VtmG",
+          "name": "OpenAi St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openrouter/auto",
+        "options": {
+          "responseFormat": "text"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        -128
+      ],
+      "id": "df55179a-67c5-46dd-a8c3-0721e268f451",
+      "name": "OpenRouter Chat Model4",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2928,
+        32
+      ],
+      "id": "1be1b38f-e043-4c13-bb89-0592cbd83cee",
+      "name": "Embeddings OpenAI6",
+      "credentials": {
+        "openAiApi": {
+          "id": "pMPTLxN8AaD8VtmG",
+          "name": "OpenAi St Austin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": "openrouter/auto",
+        "options": {
+          "responseFormat": "text"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        3104,
+        -128
+      ],
+      "id": "a738726e-ad25-4117-8716-51ed8d9917bc",
+      "name": "OpenRouter Chat Model5",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "Propiedad",
+        "description": "Retrieve available properties that fit the criteria that the user is looking ONLY if the user is indeed asking for specific available options.",
+        "topK": "=3"
+      },
+      "id": "db0236d8-cf2d-472b-bb0e-7dbbfc44cf67",
+      "name": "Vector Store Propiedades disponibles",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        2928,
+        -256
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "KnowledgeBaseChunks",
+          "mode": "list",
+          "cachedResultName": "KnowledgeBaseChunks"
+        },
+        "options": {
+          "queryName": "match_kb_chunks"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        2320,
+        -128
+      ],
+      "id": "9a213ff5-1c29-4312-a49a-9718e6da0218",
+      "name": "Supabase Vector Store KB",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "PropiedadEmbeddings",
+          "mode": "list",
+          "cachedResultName": "PropiedadEmbeddings"
+        },
+        "options": {
+          "queryName": "match_propiedades"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        2784,
+        -128
+      ],
+      "id": "1c5e2c60-860e-4aa0-842d-e26cbe7bb3fb",
+      "name": "Supabase Vector Store Propiedades",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "StAustinMedicalCenter",
+        "description": "Retrieve relevant data from the Knowledge Base about the projects.",
+        "topK": 2
+      },
+      "id": "68f4a418-a4e3-478b-abc7-cf584500b5cc",
+      "name": "Vector Store KB 2",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        -256
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        432,
+        224
+      ],
+      "id": "85b77b3a-0289-4d24-9f8f-793eb96a66cf",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9641293b-b3c4-46cd-8ad4-69b9abdc3602",
+              "leftValue": "={{ $json.from }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "13db79e6-70c3-49f2-961f-51acbd9e46dc",
+              "leftValue": "={{ $json.body }}",
+              "rightValue": "undefined",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        -48
+      ],
+      "id": "a0da7fea-665e-4948-9d5a-0dcc0d603d23",
+      "name": "If remitente y mensaje no están vacíos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a2ae8166-b095-4c86-962a-ea4afb3438b6",
+              "leftValue": "={{ $json.output.citaAgendada }}",
+              "rightValue": "citaAgendada",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4da9ab57-9257-44ae-bfc6-0a4243c18500",
+              "leftValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.citaAgendada }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3184,
+        -1408
+      ],
+      "id": "3fc068a7-ebd3-417b-8aaf-d27678074a7f",
+      "name": "If se actualizó el estado de citaAgendada"
+    },
+    {
+      "parameters": {
+        "jsCode": "const outputItems = [];\n\nfor (const item of $input.all()) { // $input.all() te da un array de todos los items de entrada\n  const newItem = { ...item.json }; // Clonamos los datos del item actual\n\n  const idInstrumento = newItem.idInstrumentoInversion;\n  let descripcionInstrumento = \"Desconocido\"; // Valor por defecto\n\n  // Mapeo basado en tu segunda imagen (image_37cfac.png)\n  const mapeoInstrumentos = {\n    0: \"Ticket\",\n    1: \"Consultorio\",\n    2: \"Local\"\n    // Puedes añadir más mapeos si es necesario\n  };\n\n  if (mapeoInstrumentos.hasOwnProperty(idInstrumento)) {\n    descripcionInstrumento = mapeoInstrumentos[idInstrumento];\n  }\n\n  // Añadimos la descripción como un nuevo campo al item\n  newItem.descripcionInstrumentoInversion = descripcionInstrumento;\n\n  outputItems.push({ json: newItem });\n}\n\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5184,
+        -1504
+      ],
+      "id": "8b9f8d7a-aaf8-4145-acc8-a5bc15089286",
+      "name": "Code resolver instrumento de inversión"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verifica si hay items de entrada.\nif (!items || items.length === 0) {\n  // Si no hay historial, devuelve un item con un mensaje indicándolo.\n  // Es importante devolver un array de objetos.\n  return [{\n    json: {\n      historialParaEmail: \"No hay mensajes en el historial.\"\n    }\n  }];\n}\n\n// PASO IMPORTANTE: Asegúrate de que 'items' realmente contiene TODOS los mensajes (usuario y IA).\n// Si en este punto 'items' solo tiene mensajes de la IA, debes revisar el nodo ANTERIOR\n// (ej. tu consulta a Supabase) para que entregue la conversación completa.\n// Este código NO PUEDE inventar los mensajes del usuario si no vienen en la entrada.\n\n// Ordena los mensajes por fechaDeEnvio para asegurar el orden cronológico.\n// Asegúrate que el campo fechaDeEnvio existe en todos los mensajes y tiene un formato de fecha válido.\nitems.sort((a, b) => new Date(a.json.fechaDeEnvio) - new Date(b.json.fechaDeEnvio));\n\n// Alternativamente, si prefieres ordenar por idHistorialConversacion y este es NUMÉRICO, SECUENCIAL y representa el orden cronológico:\n// items.sort((a, b) => a.json.idHistorialConversacion - b.json.idHistorialConversacion);\n\n\n// 1. Mapear cada objeto de mensaje al formato \"remitente: mensaje\"\nconst mensajesFormateados = items.map(item => {\n  // Accede a los datos dentro de la propiedad 'json' de cada item.\n  // Asegúrate que item.json.remitente identifica correctamente quién envió el mensaje (ej. \"usuario\", \"cliente\", \"ia\", \"bot\").\n  const remitente = item.json.remitente || \"Desconocido\";\n  const textoMensaje = item.json.mensaje || \"\"; // Asume que el mensaje está en item.json.mensaje\n  return `${remitente}: ${textoMensaje}`;\n});\n\n// 2. Unir todas las cadenas formateadas con un salto de línea para crear un solo bloque de texto.\nconst historialUnificado = mensajesFormateados.join(\"\\n\");\n\n// 3. Retornar un array con UN SOLO objeto.\n// Este objeto contendrá el historial unificado que el siguiente nodo (ej. Gmail) podrá usar.\nreturn [{\n  json: {\n    historialParaEmail: historialUnificado,\n    numeroDeMensajes: items.length // Opcional: puedes incluir el número total de mensajes si es útil.\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4304,
+        -1504
+      ],
+      "id": "955b3943-9f94-470b-b700-f6f6d38ffb8e",
+      "name": "Code Ordenar mensajes del historial"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Supabase Get detalles del asesor').first().json.correoAsesor }}",
+        "subject": "=Nueva cita agendada",
+        "emailType": "text",
+        "message": "=¡Hola {{ $('Supabase Get detalles del asesor').first().json.nombreAsesor }}! El usuario {{ $('Supabase Actualizar estado del cliente a cita agendada').first().json.nombre }} {{ $('Supabase Actualizar estado del cliente a cita agendada').first().json.apellido }} ha agendado una cita.\n\nFecha cita: {{ $('Supabase Actualizar estado del cliente a cita agendada').first().json.fechaCita }}\nModalidad de la cita: {{ $('Supabase Actualizar estado del cliente a cita agendada').first().json.modalidadCita }}\n\nHistorial de conversación entre el lead y el agente:\n{{ $('Code Ordenar mensajes del historial').first().json.historialParaEmail }}",
+        "options": {
+          "appendAttribution": false,
+          "ccList": "eloisa.berrueto@pompano.mx"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5408,
+        -1504
+      ],
+      "id": "b4efe7dc-a3a5-46fe-88cb-cc90378951e1",
+      "name": "Gmail Notificar al asesor que el usuario agendó cita",
+      "webhookId": "a7028ec6-6a79-4dab-9b60-a3ce3c8f1c9e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "5LC8ldHZFqEtVli4",
+          "name": "Gmail account dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "HistorialConversacion",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4080,
+        -1504
+      ],
+      "id": "fa3c56af-bf2b-4dd7-845e-be24c9b6723d",
+      "name": "Supabase Get historial de conversación completo del usuario",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- TRABAJANDO SOLO DENTRO DEL NODO CODE ---\n// ASUNCIÓN CLAVE: Este nodo Code está conectado DIRECTAMENTE después\n// del nodo 'AI Agent Respuesta para el Usuario' y recibe su salida en $item.json\n\nlet eventId = null; // Variable para guardar el ID que encontremos\nlet hangoutLink = null; // Nueva variable para guardar el enlace de Google Meet\n\nconsole.log(\"Iniciando búsqueda de Event ID y Hangout Link en intermediateSteps...\");\n\n// 1. Acceder al array completo de intermediateSteps desde la entrada del nodo\nconst intermediateSteps = $('AI Agent Respuesta para el Usuario').first().json.intermediateSteps;\n\n// 2. Validar que intermediateSteps sea un array usable\nif (!Array.isArray(intermediateSteps)) {\n    console.error(\"Error: $item.json.intermediateSteps no es un array válido.\", intermediateSteps);\n    // Devolver null si la estructura de entrada no es la esperada\n    return { json: { eventId: null, hangoutLink: null, error: \"intermediateSteps no es un array válido en la entrada.\" } };\n}\n\n// 3. Definir los índices específicos a revisar (se mantienen los mismos)\nconst indicesARevisar = [0, 1, 2];\nconsole.log(\"Se revisarán los índices:\", indicesARevisar);\n\n// 4. Iterar SOLAMENTE sobre los índices definidos\nfor (const index of indicesARevisar) {\n    console.log(`Revisando índice: ${index}`);\n\n    // Verificar si el índice existe en el array actual\n    if (index >= intermediateSteps.length) {\n        console.log(`Índice ${index} fuera de rango (longitud del array: ${intermediateSteps.length}).`);\n        continue; // Pasar al siguiente índice\n    }\n\n    // Intentar obtener la observación de forma segura\n    const pasoActual = intermediateSteps[index];\n    const observationString = pasoActual?.observation; // Usar '?' por si 'observation' falta\n\n    // Verificar si es un string no vacío\n    if (typeof observationString === 'string' && observationString.trim() !== '') {\n        console.log(`Encontrado string en observation[${index}]. Intentando parsear como JSON...`);\n        try {\n            // Intentar parsear el string\n            const parsedData = JSON.parse(observationString);\n\n            // Validar la estructura para el ID y ahora también para el hangoutLink\n            if (Array.isArray(parsedData) && parsedData.length > 0 && parsedData[0] && typeof parsedData[0].id === 'string' && parsedData[0].id.trim() !== '') {\n                // ¡Coincidencia encontrada! Es muy probable que sea el evento de calendario\n                eventId = parsedData[0].id;\n                console.log(`¡Éxito! Event ID encontrado en índice ${index}: ${eventId}`);\n\n                // *** NUEVA LÍNEA PARA EXTRAER EL ENLACE DE GOOGLE MEET ***\n                if (parsedData[0].hangoutLink && typeof parsedData[0].hangoutLink === 'string' && parsedData[0].hangoutLink.trim() !== '') {\n                    hangoutLink = parsedData[0].hangoutLink;\n                    console.log(`¡Éxito! Hangout Link encontrado en índice ${index}: ${hangoutLink}`);\n                } else {\n                    console.log(`No se encontró un hangoutLink válido en parsedData[0] en índice ${index}.`);\n                }\n                // ******************************************************\n\n                break; // Salir del loop, ya encontramos lo que necesitábamos\n            } else {\n                // Se parseó bien, pero la estructura no es la del evento [{id: \"...\"}]\n                console.log(`Datos parseados en índice ${index}, pero la estructura no coincide con la esperada.`);\n            }\n        } catch (error) {\n            // El parseo falló. Probablemente no era el JSON del evento.\n            console.log(`Fallo al parsear JSON en índice ${index}. Probablemente no es el evento. Error: ${error.message}`);\n            // Continuar al siguiente índice\n        }\n    } else {\n        console.log(`No se encontró un string válido en observation[${index}].`);\n    }\n} // Fin del loop for\n\n// 5. Devolver ambos resultados\nif (eventId === null) {\n    console.log(\"Búsqueda finalizada. No se encontró el Event ID en los índices 0, 1 o 2.\");\n}\nif (hangoutLink === null) {\n    console.log(\"Búsqueda finalizada. No se encontró el Hangout Link en los índices 0, 1 o 2.\");\n}\n\n\n// Ambos eventId y hangoutLink serán los valores encontrados o null si no se hallaron\nreturn { json: { eventId: eventId, hangoutLink: hangoutLink } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4528,
+        -1504
+      ],
+      "id": "c93dbdc4-e49d-4bf7-ad20-8b5772e0b705",
+      "name": "Code Extraer id de la cita"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create an event when the client asks for a date. Event duration: 1 hour. ONLY schedule events between 9am and 8pm. DO NOT scheduled outside such hours.\n\nMake sure to add 1 hour to the specified date by the user in order to match timezones.",
+        "calendar": {
+          "__rl": true,
+          "value": "6ccdca3a7f485b00a0545b2a16dbb236fe55c16f1cf3e12e1c63bedd694a6303@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Citas Prospectos Chatbot"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `ALWAYS add 1 hour to the specified date in order to match timezones. DO NOT change the date or the weekday, make sure the event is created in the corresponding date.`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "addsstaustin@gmail.com",
+            "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoElectronico }}",
+            "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoAsesor }}"
+          ],
+          "conferenceDataUi": {
+            "conferenceDataValues": {
+              "conferenceSolution": "hangoutsMeet"
+            }
+          },
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Una descripción del usuario y de la propiedad en la que esta interesado.`, 'string') }}",
+          "guestsCanInviteOthers": true,
+          "guestsCanModify": true,
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Título de la cita. Incluya el nombre del usuario.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1904,
+        -128
+      ],
+      "id": "1546d35f-b918-49bc-b648-b8d62892c7ad",
+      "name": "Google Calendar Create event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "qtw3BG5F0XCmqtaT",
+          "name": "Google Calendar St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Delete the event of the previous date with the client whenever they ask for a reschedule or try to schedule a new date.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "6ccdca3a7f485b00a0545b2a16dbb236fe55c16f1cf3e12e1c63bedd694a6303@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Citas Prospectos Chatbot"
+        },
+        "eventId": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCita }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2048,
+        -128
+      ],
+      "id": "cd05217c-acf0-41cd-ae25-e549ec02f30c",
+      "name": "Google Calendar Delete event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "qtw3BG5F0XCmqtaT",
+          "name": "Google Calendar St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Input mensaje y número del usuario').first().json.from }}",
+        "messageType": "image",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        3408,
+        -864
+      ],
+      "id": "a5e3a154-a22f-4d22-b676-d6ce8b3cf0f9",
+      "name": "WhatsApp Enviar brief",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1fGEkztKDlpZ5ZsrIGgna3uT1Pe6diTgX",
+          "mode": "list",
+          "cachedResultName": "1.png",
+          "cachedResultUrl": "https://drive.google.com/file/d/1fGEkztKDlpZ5ZsrIGgna3uT1Pe6diTgX/view?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3184,
+        -864
+      ],
+      "id": "bf36c215-a6e3-41da-b870-5b7816691c75",
+      "name": "Google Drive descargar brief",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "LA8zxVAetiqVuszy",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "briefCompartido",
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3632,
+        -640
+      ],
+      "id": "25a54fe5-939d-4611-b11c-b409b82412b9",
+      "name": "Supabase Actualizar que ya se compartió el brief",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0f3bc11c-3fac-4f65-bb0c-e88a2216c8f2",
+              "leftValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.briefCompartido }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2832,
+        -640
+      ],
+      "id": "bbfbd74f-d526-4459-827b-5d400f7126e5",
+      "name": "If el brief no se ha compartido"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "leadStatus",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `Lead status depending on the user's budget. \n    * $3,000,000 MXN  = 'Caliente'.\n    * $300,000 MXN - $2,999,999 MXN = 'Tibio'.\n    * < $300,000 MXN = 'Frio'.\n    * No answer or unclear = 'Por calificar'.`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -2000
+      ],
+      "id": "8c9e3feb-0c5d-4b52-8d80-ff5002eb8373",
+      "name": "Supabase Actualizar lead status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "profesion",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `The profession practiced by the user.`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        -1824
+      ],
+      "id": "9bb84148-d785-4686-90c0-367e01be6c57",
+      "name": "Supabase Actualizar profesion",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "AgFGeeb1MLkLq4V0",
+          "mode": "list",
+          "cachedResultName": "St Austin — St Austin Actualizar usuario en hoja del asesor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        5840,
+        -1504
+      ],
+      "id": "f1346ea4-ddb5-4835-9354-76d0a11a824e",
+      "name": "Execute Workflow Actualizar usuario en hoja de asesor"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "modalidadCita",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `Store the date modality once it is mentioned. Either \"Presencial\" or \"Videoconferencia\" dependeing on the corresponding choice.`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -1648
+      ],
+      "id": "353302d2-1d00-4ca1-9c7c-4c1040e8107f",
+      "name": "Supabase Actualizar modalidadCita",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d620ad47-848c-4a67-8847-94cc6775a024",
+              "name": "idCliente",
+              "value": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5632,
+        -1504
+      ],
+      "id": "c41d1605-9f73-44cb-8d8e-d2ee85f1e548",
+      "name": "Edit Fields Set id para el siguiente flujo"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1pF4TVi41Fw4uiA04jUQ4yd8qoj9io-EW",
+          "mode": "list",
+          "cachedResultName": "VIDEO-2025-06-06-16-09-58.mp4",
+          "cachedResultUrl": "https://drive.google.com/file/d/1pF4TVi41Fw4uiA04jUQ4yd8qoj9io-EW/view?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1952,
+        272
+      ],
+      "id": "5acb3c3a-6d3a-4791-9bfc-1988d971fba0",
+      "name": "Google Drive descargar video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "LA8zxVAetiqVuszy",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Input mensaje y número del usuario').first().json.from }}",
+        "messageType": "video",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        272
+      ],
+      "id": "d3896c2f-de89-47eb-bef4-57506c12dd26",
+      "name": "WhatsApp Enviar video",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 0.7
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2384,
+        272
+      ],
+      "id": "57ed9c9e-febe-453b-94bb-01dce6fbf368",
+      "name": "Esperar 1 segundo para que llegue el video primero",
+      "webhookId": "9481c627-e93f-43c7-820c-f2738c441885"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "fechaCita",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `Date and time of the user's date with an adviser. Store as a string in Spanish, with the format [diaDeLaSemana, dd-mes-yyyy hh:mmPM/AM]`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -1648
+      ],
+      "id": "d83d9094-72f1-4cbd-a60c-515e7f411997",
+      "name": "Supabase Actualizar fechaCita",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numeroTelefono",
+              "keyValue": "={{ $('Input mensaje y número del usuario').first().json.from }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3184,
+        -1120
+      ],
+      "id": "be35e7fc-8f47-4449-bffc-aa1d2b1c6d09",
+      "name": "Supabase Get Cliente de la tabla Clientes1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=632563839939367",
+        "recipientPhoneNumber": "={{ $('Input mensaje y número del usuario').first().json.from }}",
+        "messageType": "image",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        3408,
+        -640
+      ],
+      "id": "d6e375e3-b89a-41e0-a28f-e6b0c77ec420",
+      "name": "WhatsApp Enviar brief1",
+      "webhookId": "a3c57a1d-1c53-4389-a455-6d0a2960d5cd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "vnqQtDznoargKf5R",
+          "name": "WhatsApp St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1WNEqqHE2sCjpnV7smXsxdqg1msUK0t4W",
+          "mode": "list",
+          "cachedResultName": "2.png",
+          "cachedResultUrl": "https://drive.google.com/file/d/1WNEqqHE2sCjpnV7smXsxdqg1msUK0t4W/view?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3184,
+        -640
+      ],
+      "id": "6f4b365a-2cd4-44c1-9145-e33a4675bfcd",
+      "name": "Google Drive descargar brief1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "LA8zxVAetiqVuszy",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Asesor",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "correoAsesor",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoAsesor }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4960,
+        -1504
+      ],
+      "id": "236636b6-c58e-417c-86d3-57598f4b1e91",
+      "name": "Supabase Get detalles del asesor",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "=idCliente",
+              "value": "={{ $json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        -176
+      ],
+      "id": "950d44a1-347e-4d0d-8ffa-d9f39237cd85",
+      "name": "Execution Data",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rrWJUVBmy07hhMit",
+          "mode": "list",
+          "cachedResultName": "St Austin — St Austin Asignar Asesor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3872,
+        -1760
+      ],
+      "id": "a2eaa9d3-b6ea-4817-acca-bf8098b7c3ad",
+      "name": "Execute Workflow Asignar asesor1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5ac91c1-f930-4806-8809-6592ed225a86",
+              "name": "idCliente",
+              "value": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3648,
+        -1760
+      ],
+      "id": "8431976f-380d-47ce-9c95-d62d99643f3d",
+      "name": "Set id del cliente para mandarlo al subflujo1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c5e52f27-2ef9-4c30-824d-a361620a8940",
+              "leftValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoAsesor }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3392,
+        -1504
+      ],
+      "id": "db25e7dd-bd4f-456e-aeb4-fa63bd600fb8",
+      "name": "If el usuairo no tiene un asesor asignado"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3184,
+        -416
+      ],
+      "id": "71572552-f3be-4ee0-8179-5a4c71c15a67",
+      "name": "Esperar 3 segundos",
+      "webhookId": "6d77e813-7495-4bde-99b3-2d01ccec4ac8"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3840,
+        -640
+      ],
+      "id": "558d9bdb-eb81-4e7f-a997-8f60c5c3fd9a",
+      "name": "Esperar 1 segundo para que llegue el brief primero",
+      "webhookId": "9481c627-e93f-43c7-820c-f2738c441885"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b5356758-7dea-41e1-8474-5ef8a1ffe67d",
+              "leftValue": "={{ $json.output.profesion }}",
+              "rightValue": "Asesor de Ventas",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3408,
+        -2000
+      ],
+      "id": "2a969521-ab64-486c-9d49-63eff8a31901",
+      "name": "Si se registra \"Asesor de ventas\""
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verifica si hay items de entrada.\nif (!items || items.length === 0) {\n  // Si no hay historial, devuelve un item con un mensaje indicándolo.\n  // Es importante devolver un array de objetos.\n  return [{\n    json: {\n      historialParaEmail: \"No hay mensajes en el historial.\"\n    }\n  }];\n}\n\n// PASO IMPORTANTE: Asegúrate de que 'items' realmente contiene TODOS los mensajes (usuario y IA).\n// Si en este punto 'items' solo tiene mensajes de la IA, debes revisar el nodo ANTERIOR\n// (ej. tu consulta a Supabase) para que entregue la conversación completa.\n// Este código NO PUEDE inventar los mensajes del usuario si no vienen en la entrada.\n\n// Ordena los mensajes por fechaDeEnvio para asegurar el orden cronológico.\n// Asegúrate que el campo fechaDeEnvio existe en todos los mensajes y tiene un formato de fecha válido.\nitems.sort((a, b) => new Date(a.json.fechaDeEnvio) - new Date(b.json.fechaDeEnvio));\n\n// Alternativamente, si prefieres ordenar por idHistorialConversacion y este es NUMÉRICO, SECUENCIAL y representa el orden cronológico:\n// items.sort((a, b) => a.json.idHistorialConversacion - b.json.idHistorialConversacion);\n\n\n// 1. Mapear cada objeto de mensaje al formato \"remitente: mensaje\"\nconst mensajesFormateados = items.map(item => {\n  // Accede a los datos dentro de la propiedad 'json' de cada item.\n  // Asegúrate que item.json.remitente identifica correctamente quién envió el mensaje (ej. \"usuario\", \"cliente\", \"ia\", \"bot\").\n  const remitente = item.json.remitente || \"Desconocido\";\n  const textoMensaje = item.json.mensaje || \"\"; // Asume que el mensaje está en item.json.mensaje\n  return `${remitente}: ${textoMensaje}`;\n});\n\n// 2. Unir todas las cadenas formateadas con un salto de línea para crear un solo bloque de texto.\nconst historialUnificado = mensajesFormateados.join(\"\\n\");\n\n// 3. Retornar un array con UN SOLO objeto.\n// Este objeto contendrá el historial unificado que el siguiente nodo (ej. Gmail) podrá usar.\nreturn [{\n  json: {\n    historialParaEmail: historialUnificado,\n    numeroDeMensajes: items.length // Opcional: puedes incluir el número total de mensajes si es útil.\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3888,
+        -2000
+      ],
+      "id": "94657c54-e52c-4341-a829-aebbae81dfe1",
+      "name": "Code Ordenar mensajes del historial1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "HistorialConversacion",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3648,
+        -2000
+      ],
+      "id": "2ea5e5c8-44f3-4670-bf62-6854005c1d57",
+      "name": "Supabase Get historial de conversación completo del usuario1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "=lluvia.gonzalezrealestate@gmail.com",
+        "subject": "=Nuevo asesor identificado",
+        "emailType": "text",
+        "message": "=¡Hola Lluvia! Se ha detectado un nuevo Asesor de ventas: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.nombre }} {{ $('Supabase Get Cliente de la tabla Clientes').first().json.apellido }}\n\nNúmero de teléfono: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.numeroTelefono }}\nCorreo electrónico: {{ $('Supabase Get Cliente de la tabla Clientes').first().json.correoElectronico }}\n\nHistorial de conversación entre el lead y el agente:\n{{ $('Code Ordenar mensajes del historial1').first().json.historialParaEmail }}",
+        "options": {
+          "appendAttribution": false,
+          "ccList": "eloisa.berrueto@pompano.mx"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        4128,
+        -2000
+      ],
+      "id": "81ecf104-b694-4b39-b6b6-5be55d775893",
+      "name": "Gmail Notificar a Lluvia sobre asesor de ventas",
+      "webhookId": "a7028ec6-6a79-4dab-9b60-a3ce3c8f1c9e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "5LC8ldHZFqEtVli4",
+          "name": "Gmail account dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Input mensaje y número del usuario').first().json.body }}",
+                    "rightValue": "¡Hola! Quiero Info de Locales Comerciales en St. Austin, Querétaro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "d73f96d4-c54b-4b78-ab01-157f55a2be0d"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ad 1 julio 50 mil"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "405be577-8312-46e0-8667-d2a25164a1c1",
+                    "leftValue": "={{ $('Input mensaje y número del usuario').first().json.body }}",
+                    "rightValue": "¡Hola! Quiero Info de Tickets y Consultorios en St. Austin, Querétaro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ad 2 julio 50 mil"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Otro origen"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3472,
+        272
+      ],
+      "id": "78b70cf1-58cf-4bc6-9be3-6c542a115364",
+      "name": "Definir origen"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cbd6398-bed5-4a78-82a5-2107ca34e55a",
+              "name": "origen",
+              "value": "Ad 1 octubre",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3760,
+        112
+      ],
+      "id": "0e41c761-4660-4483-93a4-d12a10ee292e",
+      "name": "Ad 1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cbd6398-bed5-4a78-82a5-2107ca34e55a",
+              "name": "origen",
+              "value": "Ad 2 octubre",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3760,
+        288
+      ],
+      "id": "b82f0aeb-d009-4124-8b26-812106eaa984",
+      "name": "Ad 2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cbd6398-bed5-4a78-82a5-2107ca34e55a",
+              "name": "origen",
+              "value": "Otro origen",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3760,
+        464
+      ],
+      "id": "d453d426-1966-4452-ae60-762147359428",
+      "name": "Ad fallback"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase crear entrada en tabla Cliente').first().json.idCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "origen",
+              "fieldValue": "={{ $json.origen }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4048,
+        288
+      ],
+      "id": "3b7ae63f-5153-4b6e-81b2-6aa1037f6105",
+      "name": "Supabase actualizar fecha del último mensaje (mensaje inicial)1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "maxTokens": 300,
+          "responseFormat": "text",
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        -128
+      ],
+      "id": "57e86bd6-752d-42a2-81c7-26ab565f2f31",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "3PMoxO6CZmpuVbzh",
+          "name": "OpenRouter St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"López\",\n  \"correoElectronico\": \"carlos@email.com\",\n  \"profesion\": \"Médico\",\n  \"idInstrumentoInversion\": 1,\n  \"idUbicacionInteres\": 2,\n  \"presupuesto\": \"1500000\",\n  \"leadStatus\": \"Tibio\",\n  \"citaAgendada\": true,\n  \"modalidadCita\": \"Videoconferencia\",\n  \"fechaCita\": \"Lunes, 15-octubre-2025 02:30PM\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2880,
+        -1168
+      ],
+      "id": "679a7429-c2fb-4165-814f-c57731414ddc",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3e065824-2974-4201-90e4-116ff1e3ed2f",
+              "leftValue": "={{ $json.nombre }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "efc3f594-160a-45a7-80cb-7c1aa3d9f5b2",
+              "leftValue": "={{ $json.correoAsesor }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9fc6491a-6fc7-405f-af09-e112ba577fb8",
+              "leftValue": "={{ $json.profesion }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3392,
+        -1040
+      ],
+      "id": "47dddbed-9603-4672-8d7f-b4695a92f780",
+      "name": "If Tenemos el nombre del cliente y no tiene asesor asignado"
+    }
+  ],
+  "pinData": {
+    "WhatsApp Trigger on message": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "5214423864653",
+            "phone_number_id": "632563839939367"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "Berenice Pérez💜"
+              },
+              "wa_id": "5218334514585"
+            }
+          ],
+          "messages": [
+            {
+              "from": "5218334514585",
+              "id": "wamid.HBgNNTIxODMzNDUxNDU4NRUCABIYIEFDOUI2OEI3OTM0NEI3QTFENzBFN0M4RkI0RERFNUUyAA==",
+              "timestamp": "1761085696",
+              "text": {
+                "body": "Si me interesa saber donde serán las ubicaiones"
+              },
+              "type": "text"
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Supabase Get Cliente de la tabla Clientes": {
+      "main": [
+        [
+          {
+            "node": "If el numero está registrado en la tabla Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If el numero está registrado en la tabla Cliente": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase crear entrada en tabla Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase crear entrada en tabla Cliente": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar Mensaje Inicial": {
+      "main": [
+        [
+          {
+            "node": "Supabase Almacenar mensaje inicial del cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Respuesta para el Usuario": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Esperar 3 segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase actualizar fecha del último mensaje": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Buscar acción post mensaje": {
+      "main": [
+        [
+          {
+            "node": "If se actualizó el estado de citaAgendada",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supabase Get Cliente de la tabla Clientes1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Almacenar mensaje inicial del cliente": {
+      "main": [
+        [
+          {
+            "node": "Supabase Almacenar mensaje inicial del agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Almacenar mensaje inicial del agente": {
+      "main": [
+        [
+          {
+            "node": "Supabase actualizar fecha del último mensaje (mensaje inicial)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Almacenar mensaje del agente": {
+      "main": [
+        [
+          {
+            "node": "Supabase actualizar fecha del último mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If El usuario no existe en el CRM y tenemos los detalles necesarios": {
+      "main": [
+        [
+          {
+            "node": "Code Set instrumento de inversión",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Supabase Get historial de conversación del usuario": {
+      "main": [
+        [
+          {
+            "node": "Code estructurar últimos 16 mensajes y el inquiry actual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get detalles del cliente": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar idUbicacionInteres": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar correoElectronico": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar apellido": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar nombre": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar citaAgendada": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar presupuesto": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar idEspecialidadPropiedad": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Supabase Actualizar idInstrumentoInversion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar propiedadInteres": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Supabase Get detalles del cliente 2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Set fecha y hora del mensaje del usuario": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get Cliente de la tabla Clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Set instrumento de inversión": {
+      "main": [
+        [
+          {
+            "node": "HubSpot Crear contacto con los detalles de la BD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot Crear contacto con los detalles de la BD": {
+      "main": [
+        [
+          {
+            "node": "Supabase Set variable existeEnHubSpot como verdadero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code estructurar últimos 16 mensajes y el inquiry actual": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Set variable existeEnHubSpot como verdadero": {
+      "main": [
+        []
+      ]
+    },
+    "Set id del cliente para mandarlo al subflujo": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Asignar asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger on message": {
+      "main": [
+        [
+          {
+            "node": "Input mensaje y número del usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input mensaje y número del usuario": {
+      "main": [
+        [
+          {
+            "node": "If remitente y mensaje no están vacíos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Supabase Almacenar mensaje del cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Almacenar mensaje del cliente": {
+      "main": [
+        [
+          {
+            "node": "Supabase Almacenar mensaje del agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Respuesta para el Usuario1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive descargar video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI5": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store KB",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store KB 2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI6": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store Propiedades",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Propiedades disponibles",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store KB": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store KB 2",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store Propiedades": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Propiedades disponibles",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Propiedades disponibles": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Vector Store KB 2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If remitente y mensaje no están vacíos": {
+      "main": [
+        [
+          {
+            "node": "Code Set fecha y hora del mensaje del usuario",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If se actualizó el estado de citaAgendada": {
+      "main": [
+        [
+          {
+            "node": "If el usuairo no tiene un asesor asignado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Supabase Actualizar estado del cliente a cita agendada": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get detalles del asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code resolver instrumento de inversión": {
+      "main": [
+        [
+          {
+            "node": "Gmail Notificar al asesor que el usuario agendó cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Ordenar mensajes del historial": {
+      "main": [
+        [
+          {
+            "node": "Code Extraer id de la cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Notificar al asesor que el usuario agendó cita": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields Set id para el siguiente flujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get historial de conversación completo del usuario": {
+      "main": [
+        [
+          {
+            "node": "Code Ordenar mensajes del historial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Extraer id de la cita": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar estado del cliente a cita agendada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar Create event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar Delete event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase actualizar fecha del último mensaje (mensaje inicial)": {
+      "main": [
+        [
+          {
+            "node": "Definir origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive descargar brief": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar brief": {
+      "main": [
+        [
+          {
+            "node": "Google Drive descargar brief1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar que ya se compartió el brief": {
+      "main": [
+        [
+          {
+            "node": "Esperar 1 segundo para que llegue el brief primero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If el brief no se ha compartido": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Supabase Actualizar lead status": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar profesion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields Set id para el siguiente flujo": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Actualizar usuario en hoja de asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar modalidadCita": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive descargar video": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar video": {
+      "main": [
+        [
+          {
+            "node": "Esperar 1 segundo para que llegue el video primero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar 1 segundo para que llegue el video primero": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar Mensaje Inicial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Actualizar fechaCita": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get Cliente de la tabla Clientes1": {
+      "main": [
+        [
+          {
+            "node": "If El usuario no existe en el CRM y tenemos los detalles necesarios",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Tenemos el nombre del cliente y no tiene asesor asignado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive descargar brief1": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar brief1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Enviar brief1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Actualizar que ya se compartió el brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get detalles del asesor": {
+      "main": [
+        [
+          {
+            "node": "Code resolver instrumento de inversión",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get historial de conversación del usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set id del cliente para mandarlo al subflujo1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Asignar asesor1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Asignar asesor1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get historial de conversación completo del usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If el usuairo no tiene un asesor asignado": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase Get historial de conversación completo del usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar 3 segundos": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Enviar Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar 1 segundo para que llegue el brief primero": {
+      "main": [
+        []
+      ]
+    },
+    "Si se registra \"Asesor de ventas\"": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get historial de conversación completo del usuario1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get historial de conversación completo del usuario1": {
+      "main": [
+        [
+          {
+            "node": "Code Ordenar mensajes del historial1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Ordenar mensajes del historial1": {
+      "main": [
+        [
+          {
+            "node": "Gmail Notificar a Lluvia sobre asesor de ventas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Definir origen": {
+      "main": [
+        [
+          {
+            "node": "Ad 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ad 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ad fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ad 1": {
+      "main": [
+        [
+          {
+            "node": "Supabase actualizar fecha del último mensaje (mensaje inicial)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ad 2": {
+      "main": [
+        [
+          {
+            "node": "Supabase actualizar fecha del último mensaje (mensaje inicial)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ad fallback": {
+      "main": [
+        [
+          {
+            "node": "Supabase actualizar fecha del último mensaje (mensaje inicial)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Respuesta para el Usuario",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent Buscar acción post mensaje",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Tenemos el nombre del cliente y no tiene asesor asignado": {
+      "main": [
+        [
+          {
+            "node": "Set id del cliente para mandarlo al subflujo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ad21cf15-8777-4d03-9779-4b0fb1decdcc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "jUVWZBVOCTJF00iF",
+  "tags": []
+}

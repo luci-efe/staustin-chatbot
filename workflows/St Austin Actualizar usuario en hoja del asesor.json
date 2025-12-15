@@ -1,0 +1,3327 @@
+{
+  "name": "St Austin Actualizar usuario en hoja del asesor",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        176,
+        1024
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idCliente",
+              "keyValue": "={{ $json.idCliente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        400,
+        1024
+      ],
+      "id": "857a4a1f-1bd3-4d17-b2f9-27c00849deba",
+      "name": "Supabase Get Cliente de la tabla Clientes",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "EQ4xKyyt7FujDI1a",
+          "name": "Supabase St Austin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mapa de valores\nconst ubicaciones = {\n  1: { id: 1, name: \"Distrito Médico\" },\n  2: { id: 2, name: \"Bernardo Quintanta\" },\n};\n\nconst instrumentos = {\n  0: { id: 0, name: \"Ticket\" },\n  1: { id: 1, name: \"Consultorio\" },\n  2: { id: 2, name: \"Local\" },\n};\n\nconst especialidades = {\n  0:  { id: 0,  name: \"Ticket\" },\n  1:  { id: 1,  name: \"Odontología\" },\n  2:  { id: 2,  name: \"Traumatología\" },\n  3:  { id: 3,  name: \"Pediatría\" },\n  4:  { id: 4,  name: \"Ortopedia\" },\n  5:  { id: 5,  name: \"Cirugía plástica\" },\n  6:  { id: 6,  name: \"Endocrinología\" },\n  7:  { id: 7,  name: \"Gastroenterología\" },\n  8:  { id: 8,  name: \"Ultrasonido\" },\n  9:  { id: 9,  name: \"Cirugía general\" },\n  10: { id: 10, name: \"Ginecología\" },\n  11: { id: 11, name: \"Cardiología\" },\n  12: { id: 12, name: \"Medicina bariátrica\" },\n  13: { id: 13, name: \"Medicina interna\" },\n  14: { id: 14, name: \"Clínica del dolor\" },\n  15: { id: 15, name: \"Urología\" },\n  16: { id: 16, name: \"Oncología\" },\n  17: { id: 17, name: \"Obstetricia\" },\n  18: { id: 18, name: \"Bariatría\" },\n  19: { id: 19, name: \"Otorrinolaringología\" },\n  20: { id: 20, name: \"Neumología\" },\n  21: { id: 21, name: \"Neonatología\" },\n  22: { id: 22, name: \"Nefrología\" },\n  23: { id: 23, name: \"Laboratorio\" },\n  24: { id: 24, name: \"Imagenología\" },\n  25: { id: 25, name: \"Tienda de ropa\" },\n  26: { id: 26, name: \"Tienda general\" },\n  27: { id: 27, name: \"Local diversos servicios\" },\n  28: { id: 28, name: \"Restaurante\" },\n  29: { id: 29, name: \"Salud y belleza\" },\n  30: { id: 30, name: \"Tienda fisioterapia\" },\n  31: { id: 31, name: \"Farmacia\" },\n  32: { id: 32, name: \"Tienda accesorios\" },\n  33: { id: 33, name: \"Salón de ejercicio\" },\n};\n\n// Procesamos todos los items de entrada\nfor (const item of $input.all()) {\n  const json = item.json;\n\n  // Resolvemos cada ID y añadimos un nuevo campo\n  json.ubicacionInteres        = ubicaciones[ json.idUbicacionInteres ]       ?? null;\n  json.instrumentoInversion    = instrumentos[ json.idInstrumentoInversion ]  ?? null;\n  json.especialidadPropiedad   = especialidades[ json.idEspecialidadPropiedad ] ?? null;\n}\n\n// Devolvemos el array modificado\nreturn $input.all();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        1024
+      ],
+      "id": "867ebcfd-ab1c-45de-a84a-6c782c149de2",
+      "name": "Code Resolver ids"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA",
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 367937493,
+          "mode": "list",
+          "cachedResultName": "Carlos Rios",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16DwY7VYSzJkgsjcdsyqLlcuF0SlsBIcrhsQek3xvLjA/edit#gid=367937493"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        -528
+      ],
+      "id": "f08d0d6d-e5f2-40a8-bed9-772fa8eb1cab",
+      "name": "Google Sheets Update hoja del Asesor 1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c",
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Lluvia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18bfga_fHDUl9No_2kIiRT1FilVvCDU0Tox8DLUqPq0c/edit#gid=1394933495"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        -304
+      ],
+      "id": "7846b381-938c-41ef-9314-294c48d77ab3",
+      "name": "Google Sheets Update hoja del Asesor 2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY",
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        -80
+      ],
+      "id": "9a45cf9f-2786-4465-a922-75c885f92d03",
+      "name": "Google Sheets Update hoja del Asesor 3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0",
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1368881999,
+          "mode": "list",
+          "cachedResultName": "Jhona",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RLDVC57aeUDBHzavrXqEW_imw5OfuqOlTPFPJZK3HS0/edit#gid=1368881999"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}",
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        368
+      ],
+      "id": "43169fa3-635c-4f96-b246-c6f20c3a8d0d",
+      "name": "Google Sheets Update hoja del Asesor 5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ",
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 595919043,
+          "mode": "list",
+          "cachedResultName": "Alejandra Barillas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z0JB-HPEVjsF_8iKFW-lzKlBpPQSAEBppUAwSA-NZYQ/edit#gid=595919043"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        144
+      ],
+      "id": "f88fab7b-db2f-4dfd-8635-cecf82c61248",
+      "name": "Google Sheets Update hoja del Asesor 4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM",
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1093270560,
+          "mode": "list",
+          "cachedResultName": "Rafa Marin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X6BHRRkfTqQQWGT5I5GzmX6wTq1X6daUynvJi3QlSyM/edit#gid=1093270560"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        592
+      ],
+      "id": "6d7ab99c-2da9-4e0f-96d4-da347ecaa1fd",
+      "name": "Google Sheets Update hoja del Asesor 6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "carlosrios.inmobiliaria@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7b371ac4-05be-4abe-972f-77cb6db84f28"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2e1e3ef3-6fa8-4715-b249-b7f9008e9c3c",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "lluvia.gonzalezrealestate@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "723fe32c-a0ee-4125-8fd3-964acf8bdfa6",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "tuhogarqro2022@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "43d66661-657a-44c8-8270-34a30452f86e",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "alejandrabarillas2602@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e0785c87-14d0-4690-bb1c-bd1c2ae19142",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "jhonaizt@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ae59829c-110c-46da-9833-6b5a19ca9941",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "teorafamarin@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f0173baa-f0c8-4da9-830d-34d366cce5f3",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "alexgarciablanco@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dd2ee541-a071-46ed-9adf-927ec238e2b3",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "perezramabraham79@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cf674399-1056-443e-b97f-355ce225cf2b",
+                    "leftValue": "={{ $json.correoAsesor }}",
+                    "rightValue": "izta132100@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1168,
+        832
+      ],
+      "id": "6bb98599-6315-4054-b3cd-6544625bf505",
+      "name": "Switch Descubrir camino del asesor correspondiente"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Hxlsmv6X3kEqytcTagKnghLEkHFCKcOQwlH7Mxv9dWg",
+          "mode": "list",
+          "cachedResultName": "Asignación Asesores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Hxlsmv6X3kEqytcTagKnghLEkHFCKcOQwlH7Mxv9dWg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1851669581,
+          "mode": "list",
+          "cachedResultName": "GLOBAL",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Hxlsmv6X3kEqytcTagKnghLEkHFCKcOQwlH7Mxv9dWg/edit#gid=1851669581"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}",
+            "¿Tiene cita agendada?": "={{ $('Code Resolver ids').item.json.citaAgendada }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Responsable",
+              "displayName": "Responsable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2000,
+        1200
+      ],
+      "id": "1ded8886-400f-4323-9e0d-41649e75d0a2",
+      "name": "Google Sheets Update hoja Global",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g",
+          "mode": "list",
+          "cachedResultName": "Alex Garcia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 988140628,
+          "mode": "list",
+          "cachedResultName": "Alex García",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAmpRVZGWpgy81Ms5BrN-BY_Agoj3rt2UrWMZVuGd0g/edit#gid=988140628"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        816
+      ],
+      "id": "601a5809-dd8f-4ebe-bb79-cdd261e32a4a",
+      "name": "Google Sheets Update hoja del Asesor 7",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "35ce61a5-9ad8-43e2-82d8-344c833c1dab",
+              "leftValue": "={{ $('Supabase Get Cliente de la tabla Clientes').first().json.idUbicacionInteres }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        1024
+      ],
+      "id": "d73512a3-2562-4629-bdc5-cf1b06bf8d23",
+      "name": "Si está interesado en Distrito Médico"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.siguienteAsesor }}",
+                    "rightValue": "tuhogarqro2022@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7b371ac4-05be-4abe-972f-77cb6db84f28"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2e1e3ef3-6fa8-4715-b249-b7f9008e9c3c",
+                    "leftValue": "={{ $json.siguienteAsesor }}",
+                    "rightValue": "lideruno@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "723fe32c-a0ee-4125-8fd3-964acf8bdfa6",
+                    "leftValue": "={{ $json.siguienteAsesor }}",
+                    "rightValue": "lafontaine2610@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c1bbd938-cf97-47de-9dbe-f5dd4c2b0ab6",
+                    "leftValue": "={{ $json.siguienteAsesor }}",
+                    "rightValue": "lenyperrelli12@gmail.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1168,
+        1440
+      ],
+      "id": "30ac0f84-cf77-44ea-925c-bb409910a636",
+      "name": "Switch Descubrir camino del asesor correspondiente BQ"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ON8UOX1LQQsTQ0vLUYk1RyQSO5KwfyiQezUlmvjC_0U",
+          "mode": "list",
+          "cachedResultName": "Diego Lafontaine",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ON8UOX1LQQsTQ0vLUYk1RyQSO5KwfyiQezUlmvjC_0U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Diego Lafontaine",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ON8UOX1LQQsTQ0vLUYk1RyQSO5KwfyiQezUlmvjC_0U/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        1968
+      ],
+      "id": "1b62a315-879f-4c3d-9f81-183c52d7b58a",
+      "name": "Google Sheets Update hoja del Asesor 10",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1gPpFaVdn4CMQhlvhgKPm1hSvmxPYND1LVt5A9lup4zE",
+          "mode": "list",
+          "cachedResultName": "Leny Perrely",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gPpFaVdn4CMQhlvhgKPm1hSvmxPYND1LVt5A9lup4zE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Leny Perrely",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gPpFaVdn4CMQhlvhgKPm1hSvmxPYND1LVt5A9lup4zE/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        2192
+      ],
+      "id": "16270af5-22ee-4284-a677-d376359b6f76",
+      "name": "Google Sheets Update hoja del Asesor 11",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY",
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Miguel Tapia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1V6VYK3tSseLWl2I108_zg_jbDOyT1ralXQfmdSuabwY/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        1520
+      ],
+      "id": "79d96ed2-2288-412c-9866-9d7efca6e50b",
+      "name": "Google Sheets Update hoja del Asesor 1 BQ",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1sJzn_O91RxX1TO8cb7ccFIat7t1wa8Svv26a7s9eRPg",
+          "mode": "list",
+          "cachedResultName": "Manuel Quiroz",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1sJzn_O91RxX1TO8cb7ccFIat7t1wa8Svv26a7s9eRPg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1189384852,
+          "mode": "list",
+          "cachedResultName": "Manuel Quiroz",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1sJzn_O91RxX1TO8cb7ccFIat7t1wa8Svv26a7s9eRPg/edit#gid=1189384852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        1744
+      ],
+      "id": "e4e5bae9-31c3-402f-b1c6-175c8238de0a",
+      "name": "Google Sheets Update hoja del Asesor 2 BQ",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc",
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1489588635,
+          "mode": "list",
+          "cachedResultName": "Mabel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QghL3E-fBTSvYJiNweCbCN23xD6V_eJ8iiZq91O5Mbc/edit#gid=1489588635"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        1264
+      ],
+      "id": "8fb7fd41-b057-482a-82c0-2416467f1fc1",
+      "name": "Google Sheets Update hoja del Asesor 9",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY",
+          "mode": "list",
+          "cachedResultName": "Abraham Perez",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1394933495,
+          "mode": "list",
+          "cachedResultName": "Abraham",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bHjdaetQydesvtpE2dd5jB2gBjJlxD7Ag-qX-0MuydY/edit#gid=1394933495"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Número de teléfono": "={{ $('Code Resolver ids').first().json.numeroTelefono }}",
+            "Nombre": "={{ $('Code Resolver ids').first().json.nombre }} {{ $('Code Resolver ids').first().json.apellido }}",
+            "Modalidad de la cita": "={{ $('Code Resolver ids').first().json.modalidadCita }}",
+            "¿Tiene cita agendada?": "Si",
+            "Profesión": "={{ $('Code Resolver ids').first().json.profesion }}",
+            "Tipo de Lead": "={{ $('Code Resolver ids').first().json.leadStatus }}",
+            "Presupuesto": "={{ $('Code Resolver ids').first().json.presupuesto }}",
+            "Instrumento de interés": "={{ $('Code Resolver ids').first().json.instrumentoInversion.name }}",
+            "Ubicación de interés": "={{ $('Code Resolver ids').first().json.ubicacionInteres.name }}",
+            "Correo electrónico": "={{ $('Code Resolver ids').first().json.correoElectronico }}"
+          },
+          "matchingColumns": [
+            "Número de teléfono"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Número de teléfono",
+              "displayName": "Número de teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicación de interés",
+              "displayName": "Ubicación de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instrumento de interés",
+              "displayName": "Instrumento de interés",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Presupuesto",
+              "displayName": "Presupuesto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de Lead",
+              "displayName": "Tipo de Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profesión",
+              "displayName": "Profesión",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Tiene cita agendada?",
+              "displayName": "¿Tiene cita agendada?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modalidad de la cita",
+              "displayName": "Modalidad de la cita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "¿Contactado?",
+              "displayName": "¿Contactado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Evidencia del contacto",
+              "displayName": "Evidencia del contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notas del asesor",
+              "displayName": "Notas del asesor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1584,
+        1040
+      ],
+      "id": "e0c9e2c8-6b2e-4c3b-bb33-d1bf3c51dead",
+      "name": "Google Sheets Update hoja del Asesor 8",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4eowX2Jsa2grQd1r",
+          "name": "Google Sheets Dev"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "idCliente": "284"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Supabase Get Cliente de la tabla Clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Get Cliente de la tabla Clientes": {
+      "main": [
+        [
+          {
+            "node": "Code Resolver ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Resolver ids": {
+      "main": [
+        [
+          {
+            "node": "Si está interesado en Distrito Médico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Descubrir camino del asesor correspondiente": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 5": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 4": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 6": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 7": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Si está interesado en Distrito Médico": {
+      "main": [
+        [
+          {
+            "node": "Switch Descubrir camino del asesor correspondiente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch Descubrir camino del asesor correspondiente BQ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Descubrir camino del asesor correspondiente BQ": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 1 BQ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 2 BQ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Update hoja del Asesor 11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 1 BQ": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 2 BQ": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 10": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 11": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 9": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Update hoja del Asesor 8": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Update hoja Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1d5163d3-5dce-4eee-ae27-9aa4d67e82ab",
+  "meta": {
+    "instanceId": "900709ac205bf412bdd7b3d4452073dce9dfbb650e50cd24da57187d1da44e89"
+  },
+  "id": "AgFGeeb1MLkLq4V0",
+  "tags": []
+}
